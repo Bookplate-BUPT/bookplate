@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/main/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -9,6 +10,19 @@
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "list": [{
+        "pagePath": "pages/main/main",
+        "text": "首页",
+        "iconPath": "images/plus.png",
+        "selectedIconPath": "images/plus-activate.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "测试"
+      }
+    ]
+  },
   "usingComponents": {
     "van-button": "@vant/weapp/button/index",
     "van-cell": "@vant/weapp/cell/index",
