@@ -1,4 +1,4 @@
-// pages/main/main.ts
+// pages/mine/index.ts
 Page({
 
   /**

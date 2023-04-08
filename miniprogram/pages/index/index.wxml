@@ -1,6 +1,0 @@
-<!--index.wxml-->
-<van-button type="primary" bind:click="testClick">Hello</van-button>
-
-<view wx:for="{{ t }}">
-  {{ item._id }}
-</view>
