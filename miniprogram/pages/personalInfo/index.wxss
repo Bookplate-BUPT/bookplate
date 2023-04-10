@@ -1,0 +1,13 @@
+/* pages/personalInfo/index.wxss */
+
+Page {
+  padding: 24px 0;
+}
+
+#avatar {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+}

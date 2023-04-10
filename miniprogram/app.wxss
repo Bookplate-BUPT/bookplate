@@ -1,1 +1,17 @@
 /**app.wxss**/
+
+Page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  background: #F6F6F6;
+
+  --theme-color: #8AC286;
+  --default-background-color: #F6F6F6;
+}
+
+.card-shadow {
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
+}
+
+button::after {
+  border: none;
+}

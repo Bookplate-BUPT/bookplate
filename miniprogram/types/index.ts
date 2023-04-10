@@ -1,3 +1,15 @@
+// 小程序的应用实例默认是 IAppOption 类型
+// 但其类型不支持自定义更多的全局变量
+// 故而自定义一个 BookplateApp 类型继承它
+// 每当添加全局变量的时候，需要先对类型进行扩展
+export interface BookplateApp extends IAppOption {
+  globalData: {
+    userInfo?: WechatMiniprogram.UserInfo,
+    user: User,
+  }
+}
+
+// 数据库相关
 type DocumentId = string | number
 
 interface DBIdentifier {
@@ -12,6 +24,7 @@ export interface User extends DBIdentifier {
   major: string           // 专业
   nickname: string        // 昵称
   register_time: Date     // 注册时间
+  role: string            // 身份
 }
 
 export interface Book extends DBIdentifier {
@@ -28,7 +41,7 @@ export interface Book extends DBIdentifier {
   original_price: number  // 原价
   price: number           // 二手价格
   publisher: string       // 出版社
-  publish_time: Date      // 出版时间
+  publish_time: string    // 出版时间
   status: number          // 书籍状态
   trade_location: string  // 交易地点
   views: number           // 浏览量
@@ -72,4 +85,10 @@ export interface Trade extends DBIdentifier {
   state_zero_time: Date         // state 设置为 0 的时间
   price: number                 // 交易价格
   location: string              // 交易地点
+}
+
+// 缓存相关
+export interface UserInfoCache {
+  user: User              // 用户信息
+  time: number            // 缓存时间
 }

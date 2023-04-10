@@ -5,18 +5,20 @@
     "pages/guide/index",
     "pages/main/index",
     "pages/me/index",
-    "pages/message/index"
+    "pages/message/index",
+    "pages/sellBook/index",
+    "pages/personalInfo/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#8ac286",
+    "navigationBarBackgroundColor": "#8AC286",
     "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
   "tabBar": {
-    "color": "#aaaaaa",
-    "selectedColor": "#8ac286",
+    "color": "#AAAAAA",
+    "selectedColor": "#8AC286",
     "borderStyle": "white",
     "list": [{
         "pagePath": "pages/main/index",
@@ -116,6 +118,10 @@
     "van-goods-action": "@vant/weapp/goods-action/index",
     "van-goods-action-icon": "@vant/weapp/goods-action-icon/index",
     "van-goods-action-button": "@vant/weapp/goods-action-button/index",
-    "van-panel": "@vant/weapp/panel/index"
+    "van-panel": "@vant/weapp/panel/index",
+    "school-select": "/components/school-select/index",
+    "role-select": "/components/role-select/index",
+    "grade-select": "/components/grade-select/index",
+    "major-select": "/components/major-select/index"
   }
 }

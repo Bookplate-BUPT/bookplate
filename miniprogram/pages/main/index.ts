@@ -1,73 +1,22 @@
 // pages/main/index.ts
-// 获取应用实例
-const app = getApp<IAppOption>()
+import { BookplateApp, Book } from "../../types/index"
+import { getBookByISBN } from "../../services/users"
 
-// import { Book } from "../../types"
-// import { getBookByISBN } from "../../services/users"
-
+const app = getApp<BookplateApp>()
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    // test: app.globalData.user
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad() {
-
+    // app.globalData
+    // wx.cloud.database().collection("test")
+    //   .add({
+    //     data: {
+    //       a: 1,
+    //       b: 2,
+    //     }
+    //   })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
 })

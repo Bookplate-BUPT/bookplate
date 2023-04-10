@@ -1,0 +1,4 @@
+<!--components/major-select/index.wxml-->
+<van-cell title="学院和专业" use-label-slot>
+  <van-picker slot="label" columns="{{ columns }}" bind:change="onChange" style="--picker-option-font-size: 14px" />
+</van-cell>

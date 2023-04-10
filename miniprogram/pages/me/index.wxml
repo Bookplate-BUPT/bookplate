@@ -1,2 +1,21 @@
 <!--pages/mine/index.wxml-->
-<text>pages/mine/index.wxml</text>
+
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<van-cell-group inset custom-class="card-shadow avatar-box">
+  <view bindtap="toPersonalInfo">
+    <van-image round width="64" height="64" src="{{ user.avatar ? user.avatar : utils.DEFAULT_AVATAR_URL }}" />
+    123
+
+    <!-- <van-row>
+    <van-col custom-class="usernameCol">
+      <text style="font-size: 14px; margin-left: 16px;">{{ userInfo.nickName }}</text>
+      <van-tag color="#f6a7af" style="margin-left: 12px;">{{ userSchool == '游客'? '' : userGrade+'级' }}</van-tag>
+    </van-col>
+    <van-col offset="2" custom-class="tagCol">
+      <van-tag color="#b0c2db">{{ userSchool }}</van-tag>
+    </van-col>
+  </van-row> -->
+  </view>
+
+</van-cell-group>

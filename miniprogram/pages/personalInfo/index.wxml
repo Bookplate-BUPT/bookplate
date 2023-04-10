@@ -1,0 +1,26 @@
+<!--pages/personalInfo/index.wxml-->
+
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<van-cell-group inset custom-class="card-shadow">
+  <van-field label="头像" required readonly>
+    <button id="avatar" data-key="avatar" open-type="chooseAvatar" bind:chooseavatar="onChange" slot="button">
+      <van-image round width="64" height="64" src="{{ user.avatar ? user.avatar : utils.DEFAULT_AVATAR_URL }}" />
+    </button>
+  </van-field>
+
+  <van-field bind:blur="onChange" bind:input="onChange" data-key="nickname" value="{{ user.nickname }}" type="nickname" placeholder="请输入昵称" label="昵称" required clearable clear-trigger="focus" input-align="right" />
+
+  <role-select bind:change="onChange" data-key="role" role="{{ user.role }}" />
+
+  <view wx:if="{{ user.role === '北邮人' || !user.role }}">
+    <grade-select bind:change="onChange" data-key="grade" grade="{{ user.grade }}" />
+    <major-select bind:change="onChange" data-key="school-major" school="{{ user.school }}" major="{{ user.major }}" />
+  </view>
+</van-cell-group>
+
+<view style="height: 24px;" />
+
+<van-cell-group inset custom-class="card-shadow">
+  <van-button block color="linear-gradient(to right, #8ac286, #659c64)" bind:click="onConfirm">确认修改</van-button>
+</van-cell-group>

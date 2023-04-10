@@ -1,1 +1,9 @@
 /* pages/mine/index.wxss */
+
+Page {
+  padding-top: 24px;
+}
+
+.avatar-box {
+  padding: 12px 10%;
+}
