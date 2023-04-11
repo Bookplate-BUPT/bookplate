@@ -5,7 +5,7 @@
 <van-cell-group inset custom-class="card-shadow">
   <button id="avatar" data-key="avatar" open-type="chooseAvatar" bind:chooseavatar="onChange">
     <van-field label="头像" required readonly>
-      <van-image slot="button" round width="64" height="64" src="{{ user.avatar ? user.avatar : utils.DEFAULT_AVATAR_URL }}" />
+      <van-image slot="button" round width="64" height="64" src="{{ isLogin ? user.avatar : utils.DEFAULT_AVATAR_URL }}" />
     </van-field>
   </button>
 
@@ -13,7 +13,7 @@
 
   <role-select bind:change="onChange" data-key="role" role="{{ user.role }}" />
 
-  <view wx:if="{{ user.role === '北邮人' || !user.role }}">
+  <view wx:if="{{ isLogin && user.role && user.role !== '游客' }}">
     <grade-select bind:change="onChange" data-key="grade" grade="{{ user.grade }}" />
     <major-select id='major-picker' bind:change="onChange" data-key="school-major" school="{{ user.school }}" major="{{ user.major }}" />
   </view>

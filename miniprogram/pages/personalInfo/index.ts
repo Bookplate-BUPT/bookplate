@@ -1,15 +1,17 @@
 // pages/personalInfo/index.ts
 import { DEFAULT_AVATAR_URL } from "../../utils/utils"
-import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUser, uploadAvatar } from "../../services/users"
+import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, isLogin, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUser, uploadAvatar } from "../../services/users"
 
 Page({
   data: {
     user: getLocalUser(),
+    isLogin: isLogin(),
   },
 
   onLoad() {
     this.setData({
       user: getLocalUser(),
+      isLogin: isLogin(),
     })
   },
 

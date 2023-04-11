@@ -119,7 +119,6 @@
     "van-goods-action-icon": "@vant/weapp/goods-action-icon/index",
     "van-goods-action-button": "@vant/weapp/goods-action-button/index",
     "van-panel": "@vant/weapp/panel/index",
-    "school-select": "/components/school-select/index",
     "role-select": "/components/role-select/index",
     "grade-select": "/components/grade-select/index",
     "major-select": "/components/major-select/index"

@@ -26,7 +26,7 @@ export const setLocalUserOpenId = (openid: string): void => {
 
 // 获取全局变量中的用户信息
 export const getLocalUser = (): User => {
-  return app.globalData.user
+  return JSON.parse(JSON.stringify(app.globalData.user))
 }
 
 // 设置全局变量中的用户信息
