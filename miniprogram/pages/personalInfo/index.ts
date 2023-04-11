@@ -1,8 +1,7 @@
 // pages/personalInfo/index.ts
-import { BookplateApp, User } from "../../types/index"
-import { DEFAULT_AVATAR_URL, isLogin } from "../../utils/utils"
-
-const app = getApp<BookplateApp>()
+import { User } from "../../types/index"
+import { DEFAULT_AVATAR_URL } from "../../utils/utils"
+import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUser } from "../../services/users"
 
 Page({
   data: {
@@ -10,11 +9,9 @@ Page({
   },
 
   onLoad() {
-    if (isLogin()) {
-      this.setData({
-        user: app.globalData.user
-      })
-    }
+    this.setData({
+      user: getLocalUser(),
+    })
   },
 
   onChange(e: WechatMiniprogram.TouchEvent) {
@@ -40,7 +37,6 @@ Page({
         this.setData({
           ['user.role']: e.detail
         })
-        console.log('修改成', e.detail)
       }
     } else if (e.currentTarget.dataset.key === 'school-major') {
       this.setData({
@@ -54,21 +50,51 @@ Page({
     }
   },
 
-  onConfirm() {
-    // if (!this.data.user.nickname) {
-    //   wx.showToast({
-    //     title: '昵称不能为空',
-    //     icon: 'error',
-    //   })
-    //   return
-    // }
+  async onConfirm() {
+    if (!this.data.user.nickname) {
+      wx.showToast({
+        title: '昵称不能为空',
+        icon: 'error',
+      })
+      return
+    }
 
-    // if (!this.data.user.avatar) {
-    //   this.setData({
-    //     ['user.avatar']: DEFAULT_AVATAR_URL
-    //   })
-    // }
+    // 没有主动设置头像则给予默认头像
+    if (!this.data.user.avatar) {
+      this.setData({
+        ['user.avatar']: DEFAULT_AVATAR_URL
+      })
+    }
 
-    console.log(this.data.user)
+    // 如果没有 openid 的话需要获取一下
+    // 首次使用，或者退出登录再登录时会缺少 openid
+    if (!getLocalUserOpenId()) {
+      setLocalUserOpenId((await getOpenId()).openid)
+    }
+
+    // 检查用户是不是第一次登录，先前存不存在此用户
+    let userDB = await getUserByOpenId(getLocalUserOpenId())
+
+    // 如果没有则添加新用户
+    if (!userDB) {
+      this.setData({
+        ['user.register_time']: new Date()
+      })
+      console.log(this.data.user.register_time)
+      setLocalUserId((await addUser(this.data.user))._id)
+    } else { // 有则更新用户信息
+      updateUser(this.data.user, userDB._id)
+    }
+
+    // 设置缓存和全局变量
+    wx.setStorageSync('user', {
+      _id: getLocalUserId(),
+      _openid: getLocalUserOpenId(),
+      user: this.data.user,
+      time: new Date(),
+    })
+    setLocalUser(this.data.user)
+
+    wx.navigateBack()
   }
 })

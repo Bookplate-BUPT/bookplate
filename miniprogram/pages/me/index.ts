@@ -1,7 +1,6 @@
 // pages/me/index.ts
-import { BookplateApp, User } from "../../types/index"
-
-const app = getApp<BookplateApp>()
+import { getLocalUser } from "../../services/users"
+import { User } from "../../types/index"
 
 Page({
   data: {
@@ -10,7 +9,7 @@ Page({
 
   onShow() {
     this.setData({
-      user: app.globalData.user
+      user: getLocalUser()
     })
   },
 

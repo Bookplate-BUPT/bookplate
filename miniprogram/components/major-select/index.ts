@@ -22,23 +22,17 @@ Component({
     major: String,
   },
 
-  lifetimes: {
-    attached() {
+  pageLifetimes: {
+    show() {
+      // 如果没有数据则附上初值
       let keyList = Object.keys(SchoolWithMajor)
-      let schoolIdx = keyList.findIndex(i => i === this.properties.school)
-      if (schoolIdx === -1) {
-        this.triggerEvent("change", [keyList[0], SchoolWithMajor[keyList[0] as keyof typeof SchoolWithMajor][0]])
-        return
+      if (keyList.findIndex(i => i === this.properties.school) === -1) {
+        this.setData({
+          school: keyList[0],
+          major: SchoolWithMajor[keyList[0] as keyof typeof SchoolWithMajor][0],
+        })
+        this.triggerEvent("change", [this.data.school, this.data.major])
       }
-
-      let majorList = SchoolWithMajor[this.properties.school as keyof typeof SchoolWithMajor]
-      let majorIdx = majorList.findIndex(i => i === this.properties.major)
-
-      this.setData({
-        ['columns[0].defaultIndex']: schoolIdx,
-        ['columns[1].defaultIndex']: majorIdx === -1 ? 0 : majorIdx,
-        ['columns[1].values']: majorList,
-      })
     },
   },
 
@@ -46,28 +40,40 @@ Component({
     columns: [
       {
         values: Object.keys(SchoolWithMajor),
-        defaultIndex: 0,
       },
       {
         values: SchoolWithMajor['未来学院'],
-        defaultIndex: 0,
       },
     ],
+    show: false,
   },
 
   methods: {
+    onSelect() {
+      this.setData({
+        show: true
+      })
+    },
+
+    onClose() {
+      this.setData({
+        show: false
+      })
+    },
+
     onChange(e: WechatMiniprogram.TouchEvent) {
       const { picker, value, index } = e.detail;
 
+      // 修改第一列时，改变第二列的数据
       if (index === 0) {
         let majorList = SchoolWithMajor[value[0] as keyof typeof SchoolWithMajor]
         picker.setColumnValues(1, majorList)
-
-        // 修改第一列时，第二列的数据不会改变，为保证正确只能默认取第一位
-        this.triggerEvent("change", [value[0], majorList[0]])
-      } else {
-        this.triggerEvent("change", value)
       }
     },
+
+    onConfirm(e: WechatMiniprogram.TouchEvent) {
+      this.onClose()
+      this.triggerEvent("change", e.detail.value)
+    }
   }
 })

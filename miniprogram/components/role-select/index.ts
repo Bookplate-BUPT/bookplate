@@ -5,26 +5,21 @@ Component({
     role: String
   },
 
-  lifetimes: {
-    attached() {
+  pageLifetimes: {
+    show() {
+      // 如果没有数据则附上初值
       if (!this.properties.role) {
-        this.triggerEvent("change", this.data.columns[this.data.defaultIndex])
-        return
+        this.setData({
+          role: this.data.columns[0],
+        })
+        this.triggerEvent("change", this.data.columns[0])
       }
-
-      let idx = this.data.columns.findIndex(i => i === this.properties.role)
-
-      this.setData({
-        defaultIndex: idx,
-        role: this.data.columns[idx],
-      })
     },
   },
 
   data: {
     columns: ['北邮人', '游客'],
     show: false,
-    defaultIndex: 0,
   },
 
   methods: {

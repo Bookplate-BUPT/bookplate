@@ -4,25 +4,21 @@ Component({
     grade: String,
   },
 
-  lifetimes: {
-    attached() {
+  pageLifetimes: {
+    show() {
+      // 如果没有数据则附上初值
       if (!this.properties.grade) {
-        this.triggerEvent("change", this.data.columns[this.data.defaultIndex])
-        return
+        this.setData({
+          grade: this.data.columns[0]
+        })
+        this.triggerEvent("change", this.data.columns[0])
       }
-
-      let idx = this.data.columns.findIndex(i => i === this.properties.grade)
-      this.setData({
-        defaultIndex: idx,
-        grade: this.data.columns[idx],
-      })
     },
   },
 
   data: {
     columns: ['2022', '2021', '2020', '2019', '2018', '2017', '2016'],
     show: false,
-    defaultIndex: 0,
   },
 
   methods: {
