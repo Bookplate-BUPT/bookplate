@@ -4,12 +4,18 @@ Page {
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
   background: #F6F6F6;
 
-  --theme-color: #8AC286;
-  --default-background-color: #F6F6F6;
+  --background: #F6F6F6;
+  --green: #8AC286;
+  --blue: #B0C2DB;
+  --pink: #F6A7AF;
+  --gray: #D1D1D1;
+  --bupt-blue: #4B7AD9;
+  --bupt: linear-gradient(to right, #ff9595, #f5b96b, #87d380);
 }
 
-.card-shadow {
+.card {
   box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
+  background: #FAFAFA;
 }
 
 button::after {

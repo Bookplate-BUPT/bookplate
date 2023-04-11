@@ -1,5 +1,5 @@
 // pages/me/index.ts
-import { getLocalUser } from "../../services/users"
+import { getLocalUser, getLocalUserOpenId } from "../../services/users"
 import { User } from "../../types/index"
 
 Page({

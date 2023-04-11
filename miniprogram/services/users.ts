@@ -46,7 +46,10 @@ export const isLogin = (): boolean => {
 
 // 登出（清除本地用户信息）
 export const logout = (): void => {
+  setLocalUserId('' as DocumentId)
+  setLocalUserOpenId('' as string)
   setLocalUser({} as User)
+  wx.removeStorageSync('user')
 }
 
 // GetOpenIdResult 是 getOpenId 云函数返回类型
@@ -117,5 +120,16 @@ export const updateUser = (user: User, docId: DocumentId): Promise<void> => {
   })
 }
 
+// 将头像上传到云存储
+export const uploadAvatar = (openid: string, avatar: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.uploadFile({
+      cloudPath: `avatars/${openid}.jpeg`,
+      filePath: avatar
+    }).then(res => {
+      resolve(res.fileID)
+    }).catch(reject)
+  })
+}
 
-// export const uploadAvatar = () 
+

@@ -40,6 +40,7 @@ export interface User {
 // 因此 add 和 update 数据库时，数据采用 User 类型
 // 但是 get 数据时，返回的数据又含有 _id 和 _openid
 // 所以 UserDB 用来表示数据库的返回结果类型
+// 而 User 表示正常操作数据库的上传数据类型
 export interface UserDB extends User, DBIdentifier { }
 
 export interface Book {
