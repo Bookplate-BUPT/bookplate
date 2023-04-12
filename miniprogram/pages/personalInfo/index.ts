@@ -5,13 +5,11 @@ import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, g
 Page({
   data: {
     user: getLocalUser(),
-    isLogin: isLogin(),
   },
 
   onLoad() {
     this.setData({
       user: getLocalUser(),
-      isLogin: isLogin(),
     })
   },
 

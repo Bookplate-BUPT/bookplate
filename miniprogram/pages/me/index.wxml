@@ -7,11 +7,11 @@
     <van-image round width="72" height="72" src="{{ user.avatar ? user.avatar : utils.DEFAULT_AVATAR_URL }}" />
 
     <view id="me-nickname-box">
-      <van-tag color="{{ user.role === '游客' ? 'var(--gray)' : 'var(--bupt-blue)' }}">{{ user.role }}</van-tag>
+      <van-tag wx:if="{{ isLogin }}" color="{{ user.role === '游客' ? 'var(--gray)' : 'var(--bupt-blue)' }}">{{ user.role }}</van-tag>
       <text id="nickname">{{ user.nickname ? user.nickname : '完善个人信息' }}</text>
     </view>
 
-    <view wx:if="{{ user.role !== '游客' }}" style="margin-top: 8px;">
+    <view wx:if="{{ isLogin && user.role !== '游客' }}" style="margin-top: 8px;">
       <van-tag color="#FF9595">{{ user.grade + ' 级' }}</van-tag>
       <van-tag color="#F5B96B" style="margin-left: 8px;">{{ user.school }}</van-tag>
       <van-tag color="#87D380" style="margin-left: 8px;">{{ user.major }}</van-tag>

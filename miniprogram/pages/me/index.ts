@@ -1,15 +1,17 @@
 // pages/me/index.ts
-import { getLocalUser, getLocalUserOpenId } from "../../services/users"
+import { getLocalUser, isLogin } from "../../services/users"
 import { User } from "../../types/index"
 
 Page({
   data: {
-    user: {} as User
+    user: {} as User,
+    isLogin: isLogin(),
   },
 
   onShow() {
     this.setData({
-      user: getLocalUser()
+      user: getLocalUser(),
+      isLogin: isLogin(),
     })
   },
 
