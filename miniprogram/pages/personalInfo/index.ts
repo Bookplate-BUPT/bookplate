@@ -1,15 +1,17 @@
 // pages/personalInfo/index.ts
-import { DEFAULT_AVATAR_URL } from "../../utils/utils"
-import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, isLogin, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUser, uploadAvatar } from "../../services/users"
+import { deepCopy } from "../../utils/utils"
+import { DEFAULT_AVATAR_URL } from "../../consts/index"
+import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUser, uploadAvatar } from "../../services/users"
+import { User } from "../../types/index"
 
 Page({
   data: {
-    user: getLocalUser(),
+    user: {} as User,
   },
 
   onLoad() {
     this.setData({
-      user: getLocalUser(),
+      user: deepCopy(getLocalUser()),
     })
   },
 
@@ -58,6 +60,10 @@ Page({
       return
     }
 
+    wx.showLoading({
+      title: '保存中'
+    })
+
     // 没有主动设置头像则给予默认头像
     if (!this.data.user.avatar) {
       this.setData({
@@ -74,7 +80,7 @@ Page({
     // 如果没有 openid 的话需要获取一下
     // 首次使用，或者退出登录再登录时会缺少 openid
     if (!getLocalUserOpenId()) {
-      setLocalUserOpenId((await getOpenId()).openid)
+      setLocalUserOpenId(await getOpenId())
     }
 
     // 检查用户是不是第一次登录，先前存不存在此用户
@@ -94,6 +100,8 @@ Page({
       })
       await updateUser(this.data.user, userDB._id)
     }
+
+    wx.hideLoading()
 
     // 设置缓存和全局变量
     wx.setStorageSync('user', {

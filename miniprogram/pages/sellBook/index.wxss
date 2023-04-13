@@ -1,1 +1,5 @@
 /* pages/sellBook/index.wxss */
+
+Page {
+  padding-bottom: 120px;
+}

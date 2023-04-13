@@ -1,6 +1,6 @@
 <!--pages/personalInfo/index.wxml-->
 
-<wxs src="../../utils/utils.wxs" module="utils" />
+<wxs src="../../consts/index.wxs" module="utils" />
 
 <van-cell-group inset custom-class="card-shadow">
   <button id="avatar" data-key="avatar" open-type="chooseAvatar" bind:chooseavatar="onChange">
@@ -9,18 +9,18 @@
     </van-field>
   </button>
 
-  <van-field bind:blur="onChange" bind:input="onChange" data-key="nickname" value="{{ user.nickname }}" type="nickname" placeholder="请输入昵称" label="昵称" required clearable clear-trigger="focus" input-align="right" />
+  <van-field bind:blur="onChange" bind:input="onChange" data-key="nickname" value="{{ user.nickname }}" type="nickname" placeholder="请输入昵称" label="昵称" required clearable clear-trigger="focus" input-align="right" title-width="4em" />
 
-  <role-select bind:change="onChange" data-key="role" role="{{ user.role }}" />
+  <role-picker bind:change="onChange" data-key="role" role="{{ user.role }}" />
 
-  <view wx:if="{{ user.role !== '游客' }}">
-    <grade-select bind:change="onChange" data-key="grade" grade="{{ user.grade }}" />
-    <major-select id='major-picker' bind:change="onChange" data-key="school-major" school="{{ user.school }}" major="{{ user.major }}" />
+  <view wx:if="{{ user.role && user.role !== '游客' }}">
+    <grade-picker bind:change="onChange" data-key="grade" grade="{{ user.grade }}" />
+    <major-picker id='major-picker' bind:change="onChange" data-key="school-major" school="{{ user.school }}" major="{{ user.major }}" />
   </view>
 </van-cell-group>
 
 <view style="height: 24px;" />
 
 <van-cell-group inset custom-class="card-shadow">
-  <van-button block color="linear-gradient(to right, #8ac286, #659c64)" bind:click="onConfirm">确认修改</van-button>
+  <van-button block color="var(--linear-green)" bind:click="onConfirm">确认修改</van-button>
 </van-cell-group>

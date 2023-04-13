@@ -1,13 +1,14 @@
 <!--pages/sellBook/index.wxml-->
 
 <!-- 顶栏通知 -->
-<van-sticky wx:if="{{ true }}">
-  <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o" text="扫码填写更加便捷噢~" />
+<van-sticky>
+  <van-notice-bar color="#1989FA" background="#ECF9FF" left-icon="info-o" text="扫码填写更加便捷噢~" />
 </van-sticky>
 
-<van-cell-group inset title="书籍信息" custom-class="card-shadow">
+<!-- 书籍信息 -->
+<van-cell-group inset title="书籍信息" custom-class="card">
   <van-field bind:change="onChange" data-key="name" value="{{ book.name }}" placeholder="请输入书名" label="书名" required clearable clear-trigger="focus" autosize type="textarea" />
-  <van-field bind:change="onChange" data-key="author" :value="{{ book.author }}" placeholder="请输入作者名" label="作者名" required clearable clear-trigger="focus" autosize type="textarea" />
+  <van-field bind:change="onChange" data-key="author" value="{{ book.author }}" placeholder="请输入作者名" label="作者名" required clearable clear-trigger="focus" autosize type="textarea" />
   <van-field bind:change="onChange" data-key="isbn" value="{{ book.isbn }}" placeholder="请输入书籍ISBN码" label="ISBN码" required clearable clear-trigger="focus" autosize type="textarea" />
   <van-field bind:change="onChange" data-key="publisher" value="{{ book.publisher }}" placeholder="请输入出版社" label="出版社" required clearable clear-trigger="focus" autosize type="textarea" />
   <van-field bind:change="onChange" data-key="publish_time" value="{{ book.publish_time }}" placeholder="请输入出版时间" label="出版时间" required clearable clear-trigger="focus" autosize type="textarea" />
@@ -15,22 +16,35 @@
 </van-cell-group>
 
 <!-- 售卖详情 -->
-<van-cell-group inset title="售卖详情" custom-class="shadow">
-  <van-field bind:change="onChange" data-key="original_price" model:value="{{ book.original_price }}" placeholder="请输入原价" label="书籍原价" required clearable clear-trigger="focus" type="digit" />
-
-  <van-field bind:change="onChange" data-key="price" model:value="{{ book.price }}" placeholder="请输入二手定价" label="二手定价" required clearable clear-trigger="focus" type="digit" />
-
-  <!-- <van-field model:value="{{ college }}" label="适用学院" placeholder="请先选择书籍适用学院" required clearable clear-trigger="focus" bind:click-input="selectCollege" readonly></van-field>
-  <van-popup show="{{ showCollege }}" bind:close="onCloseCollege" round overlay safe-area-inset-bottom safe-area-inset-top position="bottom">
-    <van-picker columns="{{ columnsCollege }}" visible-item-count="8" id="Collegeclassification" show-toolbar bind:confirm="onOrderCollege" bind:cancel="onCloseCollege" />
-  </van-popup>
-
-  <van-field model:value="{{ major }}" placeholder="请选择书籍适用专业" label="适用专业" required clearable clear-trigger="focus" bind:click-input="selectMajor" readonly></van-field>
-  <van-popup show="{{ showMajor }}" bind:close="onCloseMajor" round overlay safe-area-inset-bottom safe-area-inset-top position="bottom">
-    <van-picker columns="{{ columnsMajor }}" visible-item-count="8" id="Majorclassification" show-toolbar bind:confirm="onOrderMajor" bind:cancel="onCloseMajor" />
-  </van-popup> -->
-
-  <van-field model:value="{{ description }}" placeholder="9成新、配套资料齐全等" label="书籍情况" required clearable clear-trigger="focus" autosize type="textarea" />
+<van-cell-group inset title="售卖详情" custom-class="card">
+  <van-field bind:change="onChange" data-key="original_price" value="{{ book.original_price }}" placeholder="请输入原价" label="书籍原价" required clearable clear-trigger="focus" type="digit" />
+  <van-field bind:change="onChange" data-key="price" value="{{ book.price }}" placeholder="请输入二手定价" label="二手定价" required clearable clear-trigger="focus" type="digit" />
+  <book-major-picker bind:change="onChange" data-key="school-major" school="{{ book.school }}" major="{{ book.major }}" />
+  <van-field bind:change="onChange" data-key="description" value="{{ book.description }}" placeholder="9成新、配套资料齐全等" label="书籍情况" required clearable clear-trigger="focus" autosize type="textarea" />
 </van-cell-group>
 
-<van-button bind:click="testClick">test</van-button>
+<!-- 卖家信息 -->
+<van-cell-group inset title="卖家信息" custom-class="card">
+  <trade-location-picker bind:change="onChange" data-key="trade_location" tradeLocation="{{ book.trade_location }}" />
+  <van-field value="{{ book.contact }}" placeholder="如手机/QQ（买家拍下后才会显示）" label="备注（可选）" clearable clear-trigger="focus" autosize type="textarea" />
+</van-cell-group>
+
+<!-- 书籍图片 -->
+<van-cell-group inset title="请上传书籍实物图（如损坏、笔记等实拍图）" custom-class="card">
+  <view style="margin: 2% 0 0 3%;">
+    <image-uploader bind:change="onChange" data-key="images" images="{{ book.images }}" />
+  </view>
+</van-cell-group>
+
+<!-- 底部 -->
+<van-goods-action custom-class="top">
+  <van-goods-action-icon icon="question-o" text="帮助" bind:click="showDifficultyOverLay" />
+  <van-goods-action-icon icon="{{ bookDB._id ? 'revoke' : 'delete-o' }}" text="{{ bookDB._id ? '还原': '清空' }}" bind:click="onClear" />
+  <van-goods-action-button plain color="var(--green)" bind:click="onScanISBN">
+    <van-icon name="scan" />
+    <text style="margin-left: 4px;">扫码填写</text>
+  </van-goods-action-button>
+  <van-goods-action-button color="var(--linear-green)" bind:click="onConfirm">
+    {{ bookDB._id ? '确认修改' : '确认提交' }}
+  </van-goods-action-button>
+</van-goods-action>

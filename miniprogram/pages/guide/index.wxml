@@ -1,1 +1,15 @@
 <!--pages/guide/index.wxml-->
+
+
+<view id="footer">
+  <van-button round block color="var(--linear-green)" bind:click="toSellBook" data-scan="{{ true }}" custom-class="scan-button">
+    <view>
+      <van-icon name="scan" size="22px" />
+      <text>扫码卖书</text>
+    </view>
+  </van-button>
+
+  <view id="text-button-box">
+    <text bindtap="toSellBook" data-scan="{{ false }}">手动输入书籍信息</text>
+  </view>
+</view>

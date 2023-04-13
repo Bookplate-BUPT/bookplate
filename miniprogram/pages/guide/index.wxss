@@ -1,1 +1,36 @@
 /* pages/guide/index.wxss */
+
+#footer {
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+  text-align: center;
+
+  padding-bottom: 24px;
+}
+
+.scan-button {
+  max-height: 36px;
+  max-width: 200px;
+}
+
+.scan-button view {
+  display: flex;
+  align-items: center;
+}
+
+.scan-button view text {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+#text-button-box {
+  display: block;
+  margin-top: 8px;
+}
+
+#text-button-box text {
+  color: var(--gray-text);
+  font-size: small;
+}
