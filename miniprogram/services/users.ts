@@ -26,7 +26,7 @@ export const setLocalUserOpenId = (openid: string): void => {
 
 // 获取全局变量中的用户信息
 export const getLocalUser = (): User => {
-  return JSON.parse(JSON.stringify(app.globalData.user))
+  return app.globalData.user
 }
 
 // 设置全局变量中的用户信息
@@ -52,18 +52,8 @@ export const logout = (): void => {
   wx.removeStorageSync('user')
 }
 
-// GetOpenIdResult 是 getOpenId 云函数返回类型
-// 我们需要给 “每一个” 云函数的返回结果定义类型
-// 这样我们才能在 Typescript 中获取到想要的数据
-// 否则编译器会告诉我们类型不符，并不能 “.” 出我们想要的数据
-// 注意，实际上运行是没问题的
-// 毕竟 Typescript 只是帮你做检查，实际运行起来还是 Javascript
-// 但为了保证项目足够符合“工程思想”，还是建议定义好返回类型
-interface GetOpenIdResult {
-  openid: string
-}
 // 通过云函数获得用户的 openid
-export const getOpenId = (): Promise<GetOpenIdResult> => {
+export const getOpenId = (): Promise<string> => {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name: 'bookplateFunctions',
@@ -71,13 +61,13 @@ export const getOpenId = (): Promise<GetOpenIdResult> => {
         type: 'getOpenId'
       }
     }).then(res => {
-      resolve(res.result as GetOpenIdResult)
+      resolve(res.result as string)
     }).catch(reject)
   })
 }
 
 // 通过 openid 获取用户信息
-export const getUserByOpenId = (openid: string | undefined): Promise<UserDB> => {
+export const getUserByOpenId = (openid: string): Promise<UserDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
       .where({

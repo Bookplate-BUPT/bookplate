@@ -1,6 +1,6 @@
 <!--pages/mine/index.wxml-->
 
-<wxs src="../../utils/utils.wxs" module="utils" />
+<wxs src="../../consts/index.wxs" module="utils" />
 
 <view id="me-box">
   <van-cell-group inset custom-class="card me-avatar-box" bindtap="toPersonalInfo">
@@ -11,10 +11,10 @@
       <text id="nickname">{{ user.nickname ? user.nickname : '完善个人信息' }}</text>
     </view>
 
-    <view wx:if="{{ isLogin && user.role !== '游客' }}" style="margin-top: 8px;">
-      <van-tag color="#FF9595">{{ user.grade + ' 级' }}</van-tag>
-      <van-tag color="#F5B96B" style="margin-left: 8px;">{{ user.school }}</van-tag>
-      <van-tag color="#87D380" style="margin-left: 8px;">{{ user.major }}</van-tag>
+    <view wx:if="{{ isLogin && user.role && user.role !== '游客' }}" style="margin-top: 8px;">
+      <van-tag color="var(--tag-pink)">{{ user.grade + ' 级' }}</van-tag>
+      <van-tag color="var(--tag-orange)" style="margin-left: 8px;">{{ user.school }}</van-tag>
+      <van-tag color="var(--tag-green)" style="margin-left: 8px;">{{ user.major }}</van-tag>
     </view>
   </van-cell-group>
 </view>

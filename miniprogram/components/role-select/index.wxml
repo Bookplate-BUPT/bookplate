@@ -1,7 +1,0 @@
-<!--components/role-select/index.wxml-->
-
-<van-cell title="身份" value="{{ role }}" bind:click="onSelect" />
-
-<van-popup show="{{ show }}" position="bottom" round bind:close="onClose">
-  <van-picker columns="{{ columns }}" show-toolbar bind:confirm="onConfirm" bind:cancel="onClose" default-index="{{ defaultIndex }}" />
-</van-popup>

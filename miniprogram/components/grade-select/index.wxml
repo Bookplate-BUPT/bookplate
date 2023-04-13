@@ -1,7 +1,0 @@
-<!--components/grade-select/index.wxml-->
-
-<van-cell title="入学年份" value="{{ grade }}" bind:click="onSelect" />
-
-<van-popup show="{{ show }}" position="bottom" round bind:close="onClose">
-  <van-picker columns="{{ columns }}" show-toolbar bind:confirm="onConfirm" bind:cancel="onClose" default-index="{{ defaultIndex }}" />
-</van-popup>

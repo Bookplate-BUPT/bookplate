@@ -22,9 +22,9 @@ export type DocumentId = string | number
 // 对于每一个数据库的 add 操作，其返回数据类型都应该是 DBAddResult
 export type DBAddResult = { _id: string, errMsg: string }
 
-interface DBIdentifier {
-  _id: DocumentId         // _id 是数据库中的唯一标识，用于区分不同的数据
-  _openid: string         // _openid 是用户的唯一标识，用于区分不同的用户
+export interface DBIdentifier {
+  readonly _id: DocumentId    // _id 是数据库中的唯一标识，用于区分不同的数据
+  readonly _openid: string    // _openid 是用户的唯一标识，用于区分不同的用户
 }
 
 export interface User {
@@ -47,9 +47,10 @@ export interface Book {
   author: string          // 作者
   create_time: Date       // 用户上传时间
   contact: string         // 联系方式
-  description: string     // 书籍描述
+  description: string     // 二手情况
+  favorites: number       // 收藏量
   images: string[]        // 图片
-  introduction: string    // 二手情况
+  introduction: string    // 书籍描述
   isbn: string            // ISBN
   major: string           // 专业
   name: string            // 书名
@@ -58,7 +59,7 @@ export interface Book {
   publisher: string       // 出版社
   publish_time: string    // 出版时间
   school: string          // 学院
-  status: number          // 书籍状态
+  state: number           // 书籍状态，0表示上架中，1表示交易中，2表示已卖出
   trade_location: string  // 交易地点
   views: number           // 浏览量
 }

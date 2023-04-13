@@ -1,0 +1,7 @@
+<!--components/trade-location-picker/index.wxml-->
+
+<van-field value="{{ tradeLocation }}" placeholder="请选择交易地点" label="交易地点" required clearable clear-trigger="focus" bind:click-input="onSelect" readonly />
+
+<van-popup show="{{ show }}" position="bottom" bind:close="onClose" round>
+  <van-picker columns="{{ columns }}" show-toolbar title="选择交易地点" bind:confirm="onConfirm" bind:cancel="onClose" style="--picker-option-font-size: 14px" />
+</van-popup>

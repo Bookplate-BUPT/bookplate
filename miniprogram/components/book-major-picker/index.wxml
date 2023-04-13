@@ -1,0 +1,9 @@
+<!--components/book-major-picker/index.wxml-->
+
+<van-field value="{{ school }}" label="适用学院" placeholder="请选择书籍适用学院" required clearable clear-trigger="focus" bind:click-input="onSelect" readonly />
+
+<van-field value="{{ major }}" label="适用专业" placeholder="请选择书籍适用专业" required clearable clear-trigger="focus" bind:click-input="onSelect" readonly />
+
+<van-popup show="{{ show }}" position="bottom" bind:close="onClose" round>
+  <van-picker columns="{{ columns }}" title="选择适用学院专业" show-toolbar bind:confirm="onConfirm" bind:cancel="onClose" bind:change="onChange" style="--picker-option-font-size: 14px" />
+</van-popup>

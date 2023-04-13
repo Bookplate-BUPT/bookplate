@@ -1,0 +1,3 @@
+<!--components/image-uploader/index.wxml-->
+
+<van-uploader multiple file-list="{{ imagesOnShow }}" bind:after-read="onAdd" bind:delete="onDelete" max-count="9" image-fit="aspectFit" />

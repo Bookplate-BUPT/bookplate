@@ -1,23 +1,22 @@
-// components/grade-select/index.ts
+// components/grade-picker/index.ts
+import { Grade } from "../../consts/index"
+
 Component({
   properties: {
     grade: String,
   },
 
-  pageLifetimes: {
-    show() {
+  observers: {
+    grade: function () {
       // 如果没有数据则附上初值
       if (!this.properties.grade) {
-        this.setData({
-          grade: this.data.columns[0]
-        })
-        this.triggerEvent("change", this.data.columns[0])
+        this.triggerEvent("change", Grade[0])
       }
-    },
+    }
   },
 
   data: {
-    columns: ['2022', '2021', '2020', '2019', '2018', '2017', '2016'],
+    columns: Grade,
     show: false,
   },
 

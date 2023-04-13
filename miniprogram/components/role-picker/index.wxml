@@ -1,0 +1,7 @@
+<!--components/role-picker/index.wxml-->
+
+<van-cell title="身份" value="{{ role }}" bind:click="onSelect" title-width="4em" />
+
+<van-popup show="{{ show }}" position="bottom" bind:close="onClose" round>
+  <van-picker id="role-picker" columns="{{ columns }}" title="选择身份" show-toolbar bind:confirm="onConfirm" bind:cancel="onClose" style="--picker-option-font-size: 14px" />
+</van-popup>

@@ -4,20 +4,32 @@ Page {
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
   background: #F6F6F6;
 
+  color: #333333;
+  --gray-text: #B1B1B1;
+
   --background: #F6F6F6;
   --green: #8AC286;
   --blue: #B0C2DB;
   --pink: #F6A7AF;
   --gray: #D1D1D1;
   --bupt-blue: #4B7AD9;
-  --bupt: linear-gradient(to right, #ff9595, #f5b96b, #87d380);
+
+  --tag-pink: #FF9595;
+  --tag-orange: #F5B96B;
+  --tag-green: #87D380;
+
+  --linear-green: linear-gradient(to right, #8AC286, #659C64);
 }
 
 .card {
   box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
-  background: #FAFAFA;
+  background: #FFFFFF;
 }
 
 button::after {
   border: none;
+}
+
+.top {
+  z-index: 9;
 }

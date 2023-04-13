@@ -1,24 +1,21 @@
-// components/role-select/index.ts
+// components/role-picker/index.ts
+import { Role } from "../../consts/index"
 
 Component({
   properties: {
     role: String
   },
 
-  pageLifetimes: {
-    show() {
-      // 如果没有数据则附上初值
+  observers: {
+    role: function () {
       if (!this.properties.role) {
-        this.setData({
-          role: this.data.columns[0],
-        })
-        this.triggerEvent("change", this.data.columns[0])
+        this.triggerEvent("change", Role[0])
       }
-    },
+    }
   },
 
   data: {
-    columns: ['北邮人', '游客'],
+    columns: Role,
     show: false,
   },
 

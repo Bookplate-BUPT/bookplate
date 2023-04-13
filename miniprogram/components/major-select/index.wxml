@@ -1,8 +1,0 @@
-<!--components/major-select/index.wxml-->
-
-<van-cell title="学院" value="{{ school }}" bind:click="onSelect" />
-<van-cell title="专业" value="{{ major }}" bind:click="onSelect" />
-
-<van-popup show="{{ show }}" position="bottom" round bind:close="onClose">
-  <van-picker columns="{{ columns }}" show-toolbar bind:confirm="onConfirm" bind:cancel="onClose" bind:change="onChange" style="--picker-option-font-size: 14px" />
-</van-popup>
