@@ -19,9 +19,6 @@ export interface BookplateApp extends IAppOption {
 // 数据库自动生成的 _id 和 _openid 类型
 export type DocumentId = string | number
 
-// 对于每一个数据库的 add 操作，其返回数据类型都应该是 DBAddResult
-export type DBAddResult = { _id: string, errMsg: string }
-
 export interface DBIdentifier {
   readonly _id: DocumentId    // _id 是数据库中的唯一标识，用于区分不同的数据
   readonly _openid: string    // _openid 是用户的唯一标识，用于区分不同的用户

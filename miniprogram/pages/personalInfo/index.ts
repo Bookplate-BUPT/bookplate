@@ -1,7 +1,8 @@
 // pages/personalInfo/index.ts
 import { deepCopy } from "../../utils/utils"
 import { DEFAULT_AVATAR_URL } from "../../consts/index"
-import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUser, uploadAvatar } from "../../services/users"
+import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUserById } from "../../services/users"
+import { uploadImage } from "../../services/index"
 import { User } from "../../types/index"
 
 Page({
@@ -11,6 +12,7 @@ Page({
 
   onLoad() {
     this.setData({
+      // 修改的只是局部变量，不应该影响原数据
       user: deepCopy(getLocalUser()),
     })
   },
@@ -73,7 +75,7 @@ Page({
     // 设置头像路径为云存储路径，默认头像和云存储头像不额外进行存储
     if (this.data.user.avatar !== DEFAULT_AVATAR_URL && this.data.user.avatar.slice(0, 5) !== 'cloud') {
       this.setData({
-        ['user.avatar']: await uploadAvatar(getLocalUserOpenId(), this.data.user.avatar)
+        ['user.avatar']: await uploadImage(`avatars/${getLocalUserOpenId()}.jpg`, this.data.user.avatar)
       })
     }
 
@@ -91,14 +93,18 @@ Page({
       this.setData({
         ['user.register_time']: new Date()
       })
-      setLocalUserId((await addUser(this.data.user))._id)
+      addUser(this.data.user).then(res => {
+        setLocalUserId(res._id)
+      })
     } else { // 有则更新用户信息
       // 当用户已注册，退出再登录时，this.data.user 会缺失 register_time
       // 缺失后无法正常更新数据库信息，所以在此做一个补充
       this.setData({
         ['user.register_time']: new Date(userDB.register_time)
       })
-      await updateUser(this.data.user, userDB._id)
+      updateUserById(this.data.user, userDB._id).then(res => {
+        console.log(res)
+      })
     }
 
     wx.hideLoading()

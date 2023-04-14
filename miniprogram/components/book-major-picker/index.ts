@@ -1,18 +1,10 @@
 // components/book-major-picker/index.ts
-import { getLocalUser } from "../../services/users";
 import { BookSchoolWithMajor } from "../../consts/index";
 
 Component({
   properties: {
     school: String,
     major: String,
-  },
-
-  lifetimes: {
-    attached() {
-      let user = getLocalUser()
-      this.triggerEvent("change", [user.school, user.major])
-    }
   },
 
   data: {

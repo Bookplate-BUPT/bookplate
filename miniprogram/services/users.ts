@@ -1,4 +1,4 @@
-import { BookplateApp, DBAddResult, DocumentId, User, UserDB } from "../types/index"
+import { BookplateApp, DocumentId, User, UserDB } from "../types/index"
 const app = getApp<BookplateApp>()
 
 // 在实际开发中，直接使用 app.globalData.xxx 也是可以的
@@ -82,21 +82,21 @@ export const getUserByOpenId = (openid: string): Promise<UserDB> => {
 }
 
 // 添加新用户
-export const addUser = (user: User): Promise<DBAddResult> => {
+export const addUser = (user: User): Promise<DB.IAddResult> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
       .add({
         data: user
       })
       .then(res => {
-        resolve(res as DBAddResult)
+        resolve(res as DB.IAddResult)
       })
       .catch(reject)
   })
 }
 
 // 更新用户信息
-export const updateUser = (user: User, docId: DocumentId): Promise<void> => {
+export const updateUserById = (user: User, docId: DocumentId): Promise<DB.IUpdateResult> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
       .doc(docId)
@@ -104,22 +104,8 @@ export const updateUser = (user: User, docId: DocumentId): Promise<void> => {
         data: user
       })
       .then(res => {
-        resolve(res as any)
+        resolve(res as DB.IUpdateResult)
       })
       .catch(reject)
   })
 }
-
-// 将头像上传到云存储
-export const uploadAvatar = (openid: string, avatar: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.uploadFile({
-      cloudPath: `avatars/${openid}.jpeg`,
-      filePath: avatar
-    }).then(res => {
-      resolve(res.fileID)
-    }).catch(reject)
-  })
-}
-
-
