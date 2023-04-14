@@ -66,6 +66,12 @@ Page({
       title: '保存中'
     })
 
+    // 如果没有 openid 的话需要获取一下
+    // 首次使用，或者退出登录再登录时会缺少 openid
+    if (!getLocalUserOpenId()) {
+      setLocalUserOpenId(await getOpenId())
+    }
+
     // 没有主动设置头像则给予默认头像
     if (!this.data.user.avatar) {
       this.setData({
@@ -77,12 +83,6 @@ Page({
       this.setData({
         ['user.avatar']: await uploadImage(`avatars/${getLocalUserOpenId()}.jpg`, this.data.user.avatar)
       })
-    }
-
-    // 如果没有 openid 的话需要获取一下
-    // 首次使用，或者退出登录再登录时会缺少 openid
-    if (!getLocalUserOpenId()) {
-      setLocalUserOpenId(await getOpenId())
     }
 
     // 检查用户是不是第一次登录，先前存不存在此用户
@@ -102,9 +102,7 @@ Page({
       this.setData({
         ['user.register_time']: new Date(userDB.register_time)
       })
-      updateUserById(this.data.user, userDB._id).then(res => {
-        console.log(res)
-      })
+      updateUserById(this.data.user, userDB._id)
     }
 
     wx.hideLoading()
