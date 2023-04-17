@@ -6,11 +6,9 @@ export const uploadImage = (cloudPath: string, filePath: string): Promise<string
       cloudPath: cloudPath,
       // 指定要上传的文件的小程序临时文件路径
       filePath: filePath
-    })
-    .then(res => {
+    }).then(res => {
       resolve(res.fileID)
-    })
-    .catch(reject)
+    }).catch(reject)
   })
 }
 
@@ -19,10 +17,8 @@ export const deleteImage = (fileID: string | string[]): Promise<ICloud.DeleteFil
   return new Promise((resolve, reject) => {
     wx.cloud.deleteFile({
       fileList: typeof fileID === 'string' ? [fileID] : fileID
-    })
-    .then(res => {
+    }).then(res => {
       resolve(res)
-    })
-    .catch(reject)
+    }).catch(reject)
   })
 }

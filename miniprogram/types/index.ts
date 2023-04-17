@@ -53,8 +53,8 @@ export interface Book {
   name: string            // 书名
   original_price: number  // 原价
   price: number           // 二手价格
-  publisher: string       // 出版社
   publish_time: string    // 出版时间
+  publisher: string       // 出版社
   school: string          // 学院
   state: number           // 书籍状态，0表示上架中，1表示交易中，2表示已卖出
   trade_location: string  // 交易地点

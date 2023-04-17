@@ -44,3 +44,10 @@ export const Role = ['游客', '北邮人']
 
 // 交易校区
 export const TradeLocation = ['沙河校区', '西土城校区', '沙河或西土城校区']
+
+// 用户字段
+export const UserKeys = ['avatar', 'grade', 'major', 'nickname', 'register_time', 'role', 'school']
+
+// 书籍字段
+export const BookKeys = ['author', 'create_time', 'contact', 'description', 'favorites', 'images', 'introduction', 'isbn', 'major', 'name', 'original_price', 'publish_time', 'publisher', 'school', 'state', 'trade_location', 'views']
+

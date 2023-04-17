@@ -6,7 +6,7 @@ import { deleteImage, uploadImage } from "../../services/index";
 import { getLocalUserOpenId } from "../../services/users";
 
 interface Options {
-  scan?: boolean    // 是否需要自动扫码
+  scan?: string         // 是否需要自动扫码
   bookId?: DocumentId   // 上传新书籍，还是修改已有书籍
 }
 
@@ -20,7 +20,7 @@ Page({
   },
 
   async onLoad(options: Options) {
-    // console.log(options.scan)
+    if (options.scan === 'true') this.onScanISBN()
 
     // 已有传进来的数据
     if (options.bookId) {
@@ -121,6 +121,13 @@ Page({
     if (this.data.bookDB._id) {
       updateBookById(this.data.book, this.data.bookDB._id)
     } else { // 添加新书籍
+      this.setData({
+        ['book.create_time']: new Date(),
+        ['book.contact']: this.data.book.contact === undefined ? '' : this.data.book.contact,
+        ['book.favorites']: 0,
+        ['book.state']: 0,
+        ['book.views']: 0,
+      })
       addBook(this.data.book)
     }
 

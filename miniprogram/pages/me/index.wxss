@@ -1,4 +1,4 @@
-/* pages/mine/index.wxss */
+/* pages/me/index.wxss */
 
 #me-box {
   padding: 24px 0;

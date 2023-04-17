@@ -3,3 +3,7 @@
 Page {
   padding-bottom: 120px;
 }
+
+.book-images-padding {
+  padding: 12px;
+}

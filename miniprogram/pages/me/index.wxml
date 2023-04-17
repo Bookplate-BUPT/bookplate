@@ -1,4 +1,4 @@
-<!--pages/mine/index.wxml-->
+<!--pages/me/index.wxml-->
 
 <wxs src="../../consts/index.wxs" module="utils" />
 

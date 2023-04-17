@@ -1,3 +1,4 @@
+import { hasUserProperties } from "../utils/utils"
 import { BookplateApp, DocumentId, User, UserDB } from "../types/index"
 const app = getApp<BookplateApp>()
 
@@ -83,6 +84,10 @@ export const getUserByOpenId = (openid: string): Promise<UserDB> => {
 
 // 添加新用户
 export const addUser = (user: User): Promise<DB.IAddResult> => {
+  // 对于所有往数据库添加的数据，应该至少有一个内容为空的字段
+  // 而不是没有这个字段
+  if (!hasUserProperties(user)) return Promise.reject(new Error('缺少用户属性'))
+
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
       .add({

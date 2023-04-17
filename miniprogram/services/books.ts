@@ -1,3 +1,4 @@
+import { hasBookProperties } from "../utils/utils"
 import { Book, BookDB, DocumentId } from "../types/index"
 
 // 通过 _id 获取书籍
@@ -15,6 +16,8 @@ export const getBookById = (docId: DocumentId): Promise<BookDB> => {
 
 // 添加书籍
 export const addBook = (book: Book): Promise<DB.IAddResult> => {
+  if (!hasBookProperties(book)) return Promise.reject(new Error('缺少书籍属性'))
+
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
       .add({
@@ -61,6 +64,21 @@ export const searchBookByISBN = (isbn: string): Promise<Book> => {
 export const getBookList = (): Promise<BookDB[]> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
+      .get()
+      .then(res => {
+        resolve(res.data as BookDB[])
+      })
+      .catch(reject)
+  })
+}
+
+// 按照某一列的排序获取固定数目的书籍列表
+export const getSortedBookList = (fieldPath: string, order?: string, limit?: number, skip?: number): Promise<BookDB[]> => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.database().collection('books')
+      .orderBy(fieldPath, order ? order : 'asc')
+      .skip(skip ? skip : 0)
+      .limit(limit ? limit : 20)
       .get()
       .then(res => {
         resolve(res.data as BookDB[])

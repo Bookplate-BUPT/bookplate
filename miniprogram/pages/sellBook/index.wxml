@@ -30,10 +30,8 @@
 </van-cell-group>
 
 <!-- 书籍图片 -->
-<van-cell-group inset title="请上传书籍实物图（如损坏、笔记等实拍图）" custom-class="card">
-  <view style="margin: 2% 0 0 3%;">
-    <image-uploader bind:change="onChange" data-key="images" images="{{ book.images }}" />
-  </view>
+<van-cell-group inset title="请上传书籍实物图（如损坏、笔记等实拍图）" custom-class="card book-images-padding">
+  <image-uploader bind:change="onChange" data-key="images" images="{{ book.images }}" />
 </van-cell-group>
 
 <!-- 底部 -->
