@@ -2,15 +2,14 @@
 
 ## 前言
 
-作为 `藏书票 Bookplate` 的开发者，希望你对以下建议展开行动
+作为藏书票 Bookplate 的开发者，你应该：
 
 1. 掌握 Git 的基本操作
 2. 有一定 JavaScript 基础，深刻认识到 JavaScript 中没有**形参**，一切都是**引用**
 3. 对 JavaScript 和它的基本数据类型有一定了解，以此上手 TypeScript
 4. 拥有对同步、异步、Promise、async、await 的基本认识
-5. 了解小程序的生命周期，包括小程序、页面、组件它们自身的生命周期，以及它们之间的生命周期执行顺序
-6. 拥有一定阅读官方源代码（非本项目代码）的能力
-7. 先从 `types/index.ts` 、`services/users.ts` 这两个文件开始看起
+5. 了解小程序的生命周期，包括小程序、页面、组件它们自身的生命周期，以及彼此之间的生命周期函数执行顺序
+7. 先从 `types/index.ts` 、`services/users.ts` 这两个文件开始看起，可以从 `pages/personalInfo` 开始学习
 
 ## 环境准备
 
