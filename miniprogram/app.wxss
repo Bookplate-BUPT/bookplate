@@ -26,6 +26,11 @@ Page {
   background: #FFFFFF;
 }
 
+.swiper-cell-button {
+  --button-default-height: 100%;
+  width: auto;
+}
+
 button::after {
   border: none;
 }

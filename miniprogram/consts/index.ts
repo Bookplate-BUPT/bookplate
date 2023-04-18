@@ -51,3 +51,5 @@ export const UserKeys = ['avatar', 'grade', 'major', 'nickname', 'register_time'
 // 书籍字段
 export const BookKeys = ['author', 'create_time', 'contact', 'description', 'favorites', 'images', 'introduction', 'isbn', 'major', 'name', 'original_price', 'publish_time', 'publisher', 'school', 'state', 'trade_location', 'views']
 
+// 收藏字段
+export const FavoriteKeys = ['book_id', 'create_time']

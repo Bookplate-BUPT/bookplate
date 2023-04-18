@@ -124,6 +124,7 @@
     "major-picker": "/components/major-picker/index",
     "book-major-picker": "/components/book-major-picker/index",
     "trade-location-picker": "/components/trade-location-picker/index",
-    "image-uploader": "/components/image-uploader/index"
+    "image-uploader": "/components/image-uploader/index",
+    "main-book-card": "/components/main-book-card/index"
   }
 }

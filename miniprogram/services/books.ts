@@ -73,10 +73,11 @@ export const getBookList = (): Promise<BookDB[]> => {
 }
 
 // 按照某一列的排序获取固定数目的书籍列表
-export const getSortedBookList = (fieldPath: string, order?: string, limit?: number, skip?: number): Promise<BookDB[]> => {
+export const getSortedBookList = (fieldPath: string, order?: string, limit?: number, skip?: number, condition?: DB.IQueryCondition): Promise<BookDB[]> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
-      .orderBy(fieldPath, order ? order : 'asc')
+      .where(condition ? condition : {})
+      .orderBy(fieldPath, order ? order : 'desc')
       .skip(skip ? skip : 0)
       .limit(limit ? limit : 20)
       .get()

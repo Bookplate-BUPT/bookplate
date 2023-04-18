@@ -1,1 +1,9 @@
 /* pages/main/index.wxss */
+
+Page {
+  padding-bottom: 24px;
+}
+
+.main-book-card-margin {
+  margin-top: 12px;
+}

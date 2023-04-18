@@ -1,2 +1,14 @@
 <!--pages/main/index.wxml-->
-<text>pages/main/index.wxml</text>
+
+<view class="main-book-card-margin" wx:for="{{ bookList }}" wx:key="_id">
+  <van-cell-group inset custom-class="card">
+    <van-swipe-cell right-width="{{ 100 }}">
+      <main-book-card bookDB="{{ item }}" isNew="{{ bookIsNew[index] }}" bind:tap="toBookDetail" data-book="{{ item }}" />
+
+      <van-button slot="right" color="var(--green)" custom-class="swiper-cell-button" bind:click="favoriteBook" data-book="{{ item }}">
+        <van-icon name="star" />
+        <view>添加到收藏</view>
+      </van-button>
+    </van-swipe-cell>
+  </van-cell-group>
+</view>
