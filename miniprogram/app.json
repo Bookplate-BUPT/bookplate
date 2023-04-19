@@ -7,7 +7,8 @@
     "pages/me/index",
     "pages/message/index",
     "pages/sellBook/index",
-    "pages/personalInfo/index"
+    "pages/personalInfo/index",
+    "pages/bookDetail/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -20,7 +21,8 @@
     "color": "#AAAAAA",
     "selectedColor": "#8AC286",
     "borderStyle": "white",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/main/index",
         "text": "首页",
         "iconPath": "images/book.png",

@@ -20,6 +20,7 @@ export const isFavorite = (id: DocumentId): Promise<boolean> => {
 
 // 添加收藏
 export const addFavorite = (favorite: Favorite): Promise<DB.IAddResult> => {
+  favorite.create_time = wx.cloud.database().serverDate()
   if (!hasFavoriteProperties(favorite)) return Promise.reject(new Error('缺少收藏属性'))
 
   return new Promise((resolve, reject) => {

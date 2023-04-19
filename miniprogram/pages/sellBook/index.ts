@@ -122,7 +122,6 @@ Page({
       updateBookById(this.data.book, this.data.bookDB._id)
     } else { // 添加新书籍
       this.setData({
-        ['book.create_time']: new Date(),
         ['book.contact']: this.data.book.contact === undefined ? '' : this.data.book.contact,
         ['book.favorites']: 0,
         ['book.state']: 0,

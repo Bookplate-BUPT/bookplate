@@ -1,7 +1,7 @@
 // pages/personalInfo/index.ts
-import { deepCopy } from "../../utils/utils"
+import { deepCopy, removeDBIdentifier } from "../../utils/utils"
 import { DEFAULT_AVATAR_URL } from "../../consts/index"
-import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserByOpenId, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUserById } from "../../services/users"
+import { addUser, getLocalUser, getLocalUserId, getLocalUserOpenId, getOpenId, getUserById, getUserByOpenId, setLocalUser, setLocalUserId, setLocalUserOpenId, updateUserById } from "../../services/users"
 import { uploadImage } from "../../services/index"
 import { User } from "../../types/index"
 
@@ -12,7 +12,7 @@ Page({
 
   onLoad() {
     this.setData({
-      // 修改的只是局部变量，不应该影响原数据
+      // 修改的只是局部变量，不应该影响原数据，故需要深拷贝
       user: deepCopy(getLocalUser()),
     })
   },
@@ -85,24 +85,23 @@ Page({
       })
     }
 
-    // 检查用户是不是第一次登录，先前存不存在此用户
-    let userDB = await getUserByOpenId(getLocalUserOpenId())
+    // 有用户的 _id 则说明肯定不是新用户，直接更新信息
+    if (getLocalUserId()) {
+      updateUserById(this.data.user, getLocalUserId())
+    } else {
+      // 若没有的话，也有可能是先前登录但退出过
+      let userDB = await getUserByOpenId(getLocalUserOpenId())
 
-    // 如果没有则添加新用户
-    if (!userDB) {
-      this.setData({
-        ['user.register_time']: new Date()
-      })
-      addUser(this.data.user).then(res => {
-        setLocalUserId(res._id)
-      })
-    } else { // 有则更新用户信息
-      // 当用户已注册，退出再登录时，this.data.user 会缺失 register_time
-      // 缺失后无法正常更新数据库信息，所以在此做一个补充
-      this.setData({
-        ['user.register_time']: new Date(userDB.register_time)
-      })
-      updateUserById(this.data.user, userDB._id)
+      // 如果没有则添加新用户
+      if (!userDB) {
+        let userId = (await addUser(this.data.user))._id
+        setLocalUserId(userId)
+        this.setData({
+          user: removeDBIdentifier(await getUserById(userId))
+        })
+      } else { // 有则更新用户信息
+        updateUserById(this.data.user, userDB._id)
+      }
     }
 
     wx.hideLoading()
@@ -112,7 +111,7 @@ Page({
       _id: getLocalUserId(),
       _openid: getLocalUserOpenId(),
       user: this.data.user,
-      time: new Date(),
+      time: (new Date()).getTime(),
     })
     setLocalUser(this.data.user)
 

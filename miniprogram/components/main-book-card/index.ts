@@ -3,10 +3,17 @@
 Component({
   properties: {
     bookDB: Object,
-    isNew: Boolean,
   },
 
   data: {
     isNew: false,
   },
+
+  observers: {
+    bookDB: function (newBookDB) {
+      this.setData({
+        isNew: (new Date).getTime() - newBookDB.create_time < 86400000 * 2
+      })
+    }
+  }
 })

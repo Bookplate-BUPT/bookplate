@@ -1,32 +1,26 @@
 // pages/main/index.ts
 import { getLocalUserOpenId } from "../../services/users"
 import { getSortedBookList } from "../../services/books"
-import { BookDB } from "../../types/index"
+import { BookDB, FavoriteDB } from "../../types/index"
 import { addFavorite, isFavorite } from "../../services/favorite"
 
 Page({
   data: {
     bookList: [] as BookDB[],
-
-    // 向子组件传递数据时，Date对象传入后会变成空对象
-    // 为了能向 <main-book-card /> 传递正确的时间，以表示书籍是否为最新上架的书
-    // 只能每当修改 bookList 时同步修改 bookIsNew
-    bookIsNew: [] as boolean[],
   },
 
   onLoad() {
     getSortedBookList('create_time').then(res => {
       this.setData({
         bookList: res,
-        bookIsNew: res.map(i => {
-          return (new Date).getTime() - i.create_time.getTime() < 86400000 * 2
-        })
       })
     })
   },
 
   toBookDetail(e: WechatMiniprogram.TouchEvent) {
-    console.log(e)
+    wx.navigateTo({
+      url: `../bookDetail/index?bookDB=${encodeURIComponent(JSON.stringify(e.currentTarget.dataset.book))}`,
+    })
   },
 
   async favoriteBook(e: WechatMiniprogram.TouchEvent) {
@@ -48,9 +42,15 @@ Page({
       return
     }
 
-    addFavorite({
-      book_id: e.currentTarget.dataset.book._id,
-      create_time: new Date(),
+    let favorite = {
+      book_id: e.currentTarget.dataset.book._id
+    } as FavoriteDB
+
+    addFavorite(favorite).then(() => {
+      wx.showToast({
+        title: '收藏成功',
+        icon: 'success',
+      })
     })
   }
 })

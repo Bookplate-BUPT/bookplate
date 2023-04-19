@@ -1,14 +1,14 @@
-import { hasBookProperties } from "../utils/utils"
+import { convertDateToTimestamp, convertTimestampToTime, hasBookProperties } from "../utils/utils"
 import { Book, BookDB, DocumentId } from "../types/index"
 
 // 通过 _id 获取书籍
-export const getBookById = (docId: DocumentId): Promise<BookDB> => {
+export const getBookById = (id: DocumentId): Promise<BookDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
-      .doc(docId)
+      .doc(id)
       .get()
       .then(res => {
-        resolve(res.data as BookDB)
+        resolve(convertDateToTimestamp(res.data) as BookDB)
       })
       .catch(reject)
   })
@@ -16,6 +16,7 @@ export const getBookById = (docId: DocumentId): Promise<BookDB> => {
 
 // 添加书籍
 export const addBook = (book: Book): Promise<DB.IAddResult> => {
+  book.create_time = wx.cloud.database().serverDate()
   if (!hasBookProperties(book)) return Promise.reject(new Error('缺少书籍属性'))
 
   return new Promise((resolve, reject) => {
@@ -31,12 +32,12 @@ export const addBook = (book: Book): Promise<DB.IAddResult> => {
 }
 
 // 更新书籍
-export const updateBookById = (book: Book, docId: DocumentId): Promise<DB.IUpdateResult> => {
+export const updateBookById = (book: Book, id: DocumentId): Promise<DB.IUpdateResult> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
-      .doc(docId)
+      .doc(id)
       .update({
-        data: book
+        data: convertTimestampToTime(book)
       })
       .then(res => {
         resolve(res as DB.IUpdateResult)
@@ -66,7 +67,7 @@ export const getBookList = (): Promise<BookDB[]> => {
     wx.cloud.database().collection('books')
       .get()
       .then(res => {
-        resolve(res.data as BookDB[])
+        resolve(convertDateToTimestamp(res.data) as BookDB[])
       })
       .catch(reject)
   })
@@ -82,7 +83,7 @@ export const getSortedBookList = (fieldPath: string, order?: string, limit?: num
       .limit(limit ? limit : 20)
       .get()
       .then(res => {
-        resolve(res.data as BookDB[])
+        resolve(convertDateToTimestamp(res.data) as BookDB[])
       })
       .catch(reject)
   })

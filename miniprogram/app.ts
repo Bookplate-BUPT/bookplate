@@ -30,6 +30,5 @@ App<BookplateApp>({
     // 同时因为这里是 onLaunch ，由于小程序的生命周期顺序
     // 导致这里不能使用 setLocalUser 去设置全局变量
     this.globalData.user = userStorage.user || {}
-    this.globalData.user.register_time = new Date(this.globalData.user.register_time)
   },
 })

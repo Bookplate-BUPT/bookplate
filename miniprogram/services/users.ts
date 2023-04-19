@@ -1,4 +1,4 @@
-import { hasUserProperties } from "../utils/utils"
+import { convertDateToTimestamp, convertTimestampToTime, hasUserProperties } from "../utils/utils"
 import { BookplateApp, DocumentId, User, UserDB } from "../types/index"
 const app = getApp<BookplateApp>()
 
@@ -76,7 +76,20 @@ export const getUserByOpenId = (openid: string): Promise<UserDB> => {
       })
       .get()
       .then(res => {
-        resolve(res.data[0] as UserDB)
+        resolve(convertDateToTimestamp(res.data[0]) as UserDB)
+      })
+      .catch(reject)
+  })
+}
+
+// 通过 _id 获取用户信息
+export const getUserById = (id: DocumentId): Promise<UserDB> => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.database().collection('users')
+      .doc(id)
+      .get()
+      .then(res => {
+        resolve(convertDateToTimestamp(res.data) as UserDB)
       })
       .catch(reject)
   })
@@ -84,6 +97,9 @@ export const getUserByOpenId = (openid: string): Promise<UserDB> => {
 
 // 添加新用户
 export const addUser = (user: User): Promise<DB.IAddResult> => {
+  // 对于所有的添加操作，添加时间应该在对应的 add 方法里完成
+  user.register_time = wx.cloud.database().serverDate()
+
   // 对于所有往数据库添加的数据，应该至少有一个内容为空的字段
   // 而不是没有这个字段
   if (!hasUserProperties(user)) return Promise.reject(new Error('缺少用户属性'))
@@ -106,7 +122,7 @@ export const updateUserById = (user: User, docId: DocumentId): Promise<DB.IUpdat
     wx.cloud.database().collection('users')
       .doc(docId)
       .update({
-        data: user
+        data: convertTimestampToTime(user)
       })
       .then(res => {
         resolve(res as DB.IUpdateResult)
