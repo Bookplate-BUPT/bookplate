@@ -13,7 +13,7 @@
 
 ## 环境准备
 
-首先将本仓库 clone 下来，然后你需要联系项目的管理人员获得小程序的 appid 和云环境 ID ，替换对应内容并运行以下指令
+首先将本仓库 clone 下来，然后你需要联系项目的管理人员获得小程序的 appid 和云环境 ID ，替换对应内容并在 Git Bash 中运行以下指令
 
 ```bash
 BOOKPLATE_APP_ID=XXXXX DEVELOPMENT_ENV=XXXXX PRODUCTION_ENV=XXXXX bash init.sh
