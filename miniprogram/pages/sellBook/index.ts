@@ -88,6 +88,10 @@ Page({
       ['book.original_price']: Number(Number(this.data.book.original_price).toFixed(2)),
     })
 
+    wx.showLoading({
+      title: '发布中'
+    })
+
     // 将已有书籍的云存储图片进行对比，删去的图片在云存储中也要删除
     if (this.data.bookDB._id) {
       let deleteImageList: string[] = []
@@ -117,6 +121,8 @@ Page({
     })
     await Promise.all(promiseList)
 
+    wx.hideLoading()
+
     // 更新已有书籍
     if (this.data.bookDB._id) {
       updateBookById(this.data.book, this.data.bookDB._id)
@@ -143,8 +149,17 @@ Page({
       title: '识别中'
     })
 
+    let book = await searchBookByISBN(isbn)
+    if (!book.isbn) {
+      wx.showToast({
+        title: '未找到相关书籍',
+        icon: 'error',
+      })
+      return
+    }
+
     this.setData({
-      book: await searchBookByISBN(isbn)
+      book: book
     })
 
     wx.pageScrollTo({
