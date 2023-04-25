@@ -34,3 +34,15 @@ export const addFavorite = (favorite: Favorite): Promise<DB.IAddResult> => {
       .catch(reject)
   })
 }
+
+// 取消收藏
+export const removeFavorite = (id: DocumentId): Promise<DB.IRemoveResult> => {
+  return new Promise((resolve, reject) => {
+    // wx.cloud.database().collection('favorites')
+    //   .where({
+    //     _openid: getLocalUserOpenId(),
+    //     book_id: id,
+    //   })
+
+  })
+}

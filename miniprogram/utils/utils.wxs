@@ -1,0 +1,21 @@
+// 取数字的整数部分
+var getInt = function (n) {
+  if (n === undefined) return '0'
+  if (typeof n !== 'number') return '数字类型错误'
+  return parseInt(n)
+}
+
+// 取数字的小数部分，只返回两位
+var getFloat = function (n) {
+  if (n === undefined) return '00'
+  if (typeof n !== 'number') return '数字类型错误'
+  var ans = n.toFixed(2) * 100 % 100
+  if (ans === 0) return "00"
+  if (ans < 10) return "0" + ans
+  return ans
+}
+
+module.exports = {
+  getInt: getInt,
+  getFloat: getFloat,
+}

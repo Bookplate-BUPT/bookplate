@@ -5,6 +5,7 @@ Page {
   background: #F6F6F6;
 
   color: #333333;
+  --black-text: #333333;
   --gray-text: #B1B1B1;
 
   --background: #F6F6F6;
@@ -13,6 +14,8 @@ Page {
   --pink: #F6A7AF;
   --gray: #D1D1D1;
   --bupt-blue: #4B7AD9;
+
+  --red: #EE0A24;
 
   --tag-pink: #FF9595;
   --tag-orange: #F5B96B;
@@ -29,6 +32,10 @@ Page {
 .swiper-cell-button {
   --button-default-height: 100%;
   width: auto;
+}
+
+.notice-bar {
+  --notice-bar-font-size: small;
 }
 
 button::after {

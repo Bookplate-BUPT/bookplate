@@ -2,7 +2,7 @@
 
 <!-- 顶栏通知 -->
 <van-sticky>
-  <van-notice-bar color="#1989FA" background="#ECF9FF" left-icon="info-o" text="扫码填写更加便捷噢~" />
+  <van-notice-bar class="notice-bar" color="#1989FA" background="#ECF9FF" left-icon="info-o" text="扫码填写更加便捷噢~" />
 </van-sticky>
 
 <!-- 书籍信息 -->

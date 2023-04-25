@@ -1,11 +1,6 @@
 /* components/main-book-card/index.wxss */
 
-.card {
-  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
-  background: #FFFFFF;
-}
-
-.book-name {
+.card-book-name {
   font-weight: bolder;
   font-size: 12px;
   overflow: hidden;
@@ -15,7 +10,7 @@
   -webkit-box-orient: vertical;
 }
 
-.book-introduction {
+.card-book-introduction {
   color: var(--gray-text);
   margin-top: 6px;
   overflow: hidden;

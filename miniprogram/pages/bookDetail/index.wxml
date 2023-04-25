@@ -1,2 +1,58 @@
 <!--pages/bookDetail/index.wxml-->
-<text>pages/bookDetail/index.wxml</text>
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<van-notice-bar color="#1989FA" background="#ECF9FF" left-icon="info-o" text="建议先与卖家联系交流后，再进行交易哦~" />
+
+<view style="height: 12px;" />
+
+<van-cell-group inset custom-class="card">
+  <van-cell>
+    <swiper indicator-dots circular>
+      <swiper-item wx:for="{{ bookDB.images }}" wx:key="key">
+        <van-image height="100%" width="100%" src="{{ item }}" fit="contain" bind:click="imagePreview" data-index="{{ index }}" />
+      </swiper-item>
+    </swiper>
+  </van-cell>
+
+  <van-cell use-label-slot>
+    <view slot="label">
+      <view>
+        <text id="detail-price-mark">￥</text>
+        <text id="detail-price-int">{{ utils.getInt(bookDB.price) }}</text>
+        <text id="detail-price-float">.{{ utils.getFloat(bookDB.price) }}</text>
+        <text id="detail-original-price">￥{{ bookDB.original_price }}</text>
+      </view>
+
+      <view id="detail-book-name">{{ bookDB.name }}</view>
+    </view>
+  </van-cell>
+
+  <van-cell title="适用学院" value="{{ bookDB.school }}" title-width="4em" />
+  <van-cell title="适用专业" value="{{ bookDB.major }}" title-width="4em" />
+  <van-cell title="交易地点" value="{{ bookDB.trade_location ? bookDB.trade_location : '该用户没有留下交易地点' }}" title-width="4em" />
+  <van-cell title="卖家描述" label="{{ bookDB.description }}" />
+</van-cell-group>
+
+<van-cell-group inset custom-class="card" title="书籍信息">
+  <van-cell title="作者" label="{{ bookDB.author }}" />
+  <van-cell title="出版社" label="{{ bookDB.publisher }}" />
+  <van-cell title="出版时间" label="{{ bookDB.publish_time }}" />
+  <van-cell title="书籍描述" label="{{ bookDB.introduction ? bookDB.introduction : '该用户暂未填写' }}" />
+</van-cell-group>
+
+<van-cell-group inset custom-class="card" title="卖家信息">
+  <van-cell title="头像">
+    <van-image round width="48" height="48" src="{{ seller.avatar }}" />
+  </van-cell>
+  <van-cell title="昵称" value="{{ seller.nickname }}" />
+  <van-cell title="届级" value="{{ seller.grade }} 级" />
+  <van-cell title="学院" value="{{ seller.school }}" />
+</van-cell-group>
+
+<view style="height: 128px;" />
+
+<van-goods-action>
+  <van-goods-action-icon icon="{{ isFavorite ? 'star' : 'star-o' }}" icon-class="{{ isFavorite ? 'favorite-star' : ''}}" text="{{ isFavorite ? '已收藏' : '收藏' }}" bind:click="onFavorite" />
+  <van-goods-action-button text="立即购买" plain color="var(--green)" bind:click="toTrade" />
+  <van-goods-action-button text="联系卖家" color="var(--linear-green)" bind:click="toContact" />
+</van-goods-action>

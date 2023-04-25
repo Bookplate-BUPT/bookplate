@@ -1,6 +1,6 @@
 <!--components/grade-picker/index.wxml-->
 
-<van-cell title="入学年份" value="{{ grade }}" bind:click="onSelect" title-width="4em" />
+<van-cell title="届级" value="{{ grade }}" bind:click="onSelect" title-width="4em" />
 
 <van-popup show="{{ show }}" position="bottom" bind:close="onClose" round>
   <van-picker columns="{{ columns }}" title="选择入学年份" show-toolbar bind:confirm="onConfirm" bind:cancel="onClose" style="--picker-option-font-size: 14px" />

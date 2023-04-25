@@ -1,1 +1,41 @@
 /* pages/bookDetail/index.wxss */
+
+#detail-price-mark {
+  color: var(--red);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#detail-price-int {
+  font-size: 25px;
+  color: var(--red);
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+#detail-price-float {
+  font-size: 18px;
+  color: var(--red);
+  font-weight: 600;
+}
+
+#detail-original-price {
+  color: var(--gray-text);
+  text-decoration: line-through;
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 5px;
+}
+
+#detail-book-name {
+  color: var(--black-text);
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 6px;
+  margin-left: 2px;
+  word-break: break-all;
+}
+
+.favorite-star {
+  color: #ffc125;
+}
