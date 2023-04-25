@@ -1,14 +1,28 @@
 <!--pages/main/index.wxml-->
 
-<view class="main-book-card-margin" wx:for="{{ bookList }}" wx:key="_id">
-  <van-cell-group inset custom-class="card">
-    <van-swipe-cell right-width="{{ 100 }}">
-      <main-book-card bookDB="{{ item }}" bind:tap="toBookDetail" data-book="{{ item }}" />
+<van-search bind:search="onSearch" shape="round" use-action-slot="true" background="var(--green)">
+  <view id="main-scan-icon" slot="action" bindtap="onSearch" data-isbn="{{ true }}">
+    <van-icon name="scan" size="20px" />
+  </view>
+</van-search>
 
-      <van-button slot="right" color="var(--green)" custom-class="swiper-cell-button" bind:click="favoriteBook" data-book="{{ item }}">
-        <van-icon name="star" />
-        <view>添加到收藏</view>
-      </van-button>
-    </van-swipe-cell>
-  </van-cell-group>
-</view>
+<van-notice-bar class="notice-bar" left-icon="info-o" text="本平台仅涉及二手书意向沟通，不涉及金钱交易。" />
+
+<book-type-menu bind:changeType="onChangeType" bind:changeSort="onChangeSort" schoolType="{{ schoolType }}" sortType="{{ sortType }}"/>
+
+<scroll-view scroll-y style="height: {{ scrollViewHeight }}px;" refresher-enabled refresher-triggered="{{ triggered }}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
+  <view class="main-book-box" wx:for="{{ bookList }}" wx:key="_id">
+    <van-cell-group inset custom-class="card">
+      <van-swipe-cell right-width="{{ 100 }}">
+        <main-book-card bookDB="{{ item }}" bind:tap="toBookDetail" data-book="{{ item }}" />
+
+        <van-button slot="right" color="var(--green)" custom-class="swiper-cell-button" bind:click="onFavorite" data-book="{{ item }}">
+          <van-icon name="star" />
+          <view>添加到收藏</view>
+        </van-button>
+      </van-swipe-cell>
+    </van-cell-group>
+  </view>
+
+  <view style="height: 24px;" />
+</scroll-view>

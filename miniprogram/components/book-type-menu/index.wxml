@@ -1,0 +1,8 @@
+<!--components/book-type-menu/index.wxml-->
+
+<van-dropdown-menu active-color="var(--green)">
+  <van-dropdown-item id="book-type-menu" title="{{ schoolType }}">
+    <van-tree-select items="{{ bookTypeOption }}" main-active-index="{{ schoolIndex }}" active-id="{{ majorIndex }}" bind:click-nav="onChangeSchool" bind:click-item="onChangeMajor" content-item-class="major" main-active-class="school-active" content-active-class="major-active" />
+  </van-dropdown-item>
+  <van-dropdown-item value="{{ sortType }}" options="{{ sortTypeOption }}" bind:change="onChangeSort" />
+</van-dropdown-menu>

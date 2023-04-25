@@ -1,0 +1,13 @@
+/* components/book-type-menu/index.wxss */
+.major {
+  font-weight: 400 !important;
+  color: var(--black-text);
+}
+
+.school-active {
+  --sidebar-selected-border-color: var(--green);
+}
+
+.major-active {
+  --tree-select-item-active-color: var(--green);
+}

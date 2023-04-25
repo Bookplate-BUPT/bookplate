@@ -67,7 +67,7 @@ export const getOpenId = (): Promise<string> => {
   })
 }
 
-// 通过 openid 获取用户信息
+// 通过 openid 获取自己的信息（由于权限问题，不能以此获取其他用户的信息）
 export const getUserByOpenId = (openid: string): Promise<UserDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
@@ -82,7 +82,7 @@ export const getUserByOpenId = (openid: string): Promise<UserDB> => {
   })
 }
 
-// 通过 _id 获取用户信息
+// 通过 _id 获取自己的信息（由于权限问题，不能以此获取其他用户的信息）
 export const getUserById = (id: DocumentId): Promise<UserDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
@@ -128,5 +128,20 @@ export const updateUserById = (user: User, docId: DocumentId): Promise<DB.IUpdat
         resolve(res as DB.IUpdateResult)
       })
       .catch(reject)
+  })
+}
+
+// 获取用户信息
+export const getUserPublicInfo = (openid: string): Promise<User> => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'bookplateFunctions',
+      data: {
+        type: 'getUserPublicInfo',
+        openid: openid,
+      }
+    }).then(res => {
+      resolve(res.result as User)
+    }).catch(reject)
   })
 }

@@ -1,9 +1,13 @@
 /* pages/main/index.wxss */
 
 Page {
-  padding-bottom: 24px;
+  margin-top: -8px;
 }
 
-.main-book-card-margin {
-  margin-top: 12px;
+#main-scan-icon {
+  margin: 4px 8px 0;
+}
+
+.main-book-box {
+  margin: 12px 0;
 }
