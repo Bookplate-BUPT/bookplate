@@ -18,6 +18,7 @@ Page({
     // 显示相关
     scrollViewHeight: 0,          // 书籍列表元素应该有的长度
     isOnPullDownRefresh: false,   // 是否正在下拉刷新，用于取消下拉刷新动画
+    isOnReachBottom: false,       // 是否正在触底加载，用于节流判断
     isNoMore: false,              // 是否后续还有书籍
   },
 
@@ -137,7 +138,12 @@ Page({
 
   // 滑动触底时触发
   onReachBottom() {
-    if (this.data.isNoMore) return
+    if (this.data.isOnReachBottom || this.data.isNoMore) return
+
+    // 用于节流判断，当前正在触底加载新数据时，再次触底不重复加载
+    this.setData({
+      isOnReachBottom: true
+    })
 
     wx.showLoading({
       title: '正在加载'
@@ -150,7 +156,43 @@ Page({
       this.setData({
         bookList: this.data.bookList.concat(res),
         isNoMore: res.length < BOOK_LIMIT_NUM,  // 获取的数量若不足够，说明后续已经没有书籍了
+        isOnReachBottom: false,
       })
     })
+  },
+
+  // 搜索时触发
+  onSearch(e: WechatMiniprogram.TouchEvent) {
+    if (e.type === 'search' && !e.detail) {
+      wx.showToast({
+        title: '内容不能为空',
+        icon: 'error',
+      })
+      return
+    }
+
+    // 关键字搜索
+    if (e.type === 'search') {
+      wx.navigateTo({
+        url: `../searchResult/index?keyword=${e.detail}`
+      })
+    }
+
+    // isbn 搜索
+    if (e.type === 'tap') {
+      wx.scanCode({
+        onlyFromCamera: false,
+        scanType: ['barCode'],
+      }).then(res => {
+        wx.navigateTo({
+          url: `../searchResult/index?isbn=${res.result}`
+        })
+      }).catch(res => {
+        wx.showToast({
+          title: '识别失败',
+          icon: 'error',
+        })
+      })
+    }
   },
 })
