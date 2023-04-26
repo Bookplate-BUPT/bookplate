@@ -1,6 +1,6 @@
 import { DBIdentifier } from '../types/index'
 import { Book, User } from "../types"
-import { BookKeys, FavoriteKeys, UserKeys } from "../consts/index"
+import { BOOK_KEYS, FAVORITE_KEYS, USER_KEYS } from "../consts/index"
 
 // 深拷贝
 export const deepCopy = <T extends Object>(obj: T): T => {
@@ -70,15 +70,15 @@ export const hasAllProperties = (obj: any, keys: string[]): boolean => {
 
 // 检查对象是否包含所有用户属性
 export const hasUserProperties = (obj: User): boolean => {
-  return hasAllProperties(obj, UserKeys)
+  return hasAllProperties(obj, USER_KEYS)
 }
 
 // 检查对象是否包含所有图书属性
 export const hasBookProperties = (obj: Book): boolean => {
-  return hasAllProperties(obj, BookKeys)
+  return hasAllProperties(obj, BOOK_KEYS)
 }
 
 // 检查对象是否包含所有收藏属性
 export const hasFavoriteProperties = (obj: any): boolean => {
-  return hasAllProperties(obj, FavoriteKeys)
+  return hasAllProperties(obj, FAVORITE_KEYS)
 }

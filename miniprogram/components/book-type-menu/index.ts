@@ -1,5 +1,5 @@
 // components/book-type-menu/index.ts
-import { BookTypeOption, SortTypeOption } from "../../consts/index";
+import { BOOK_TYPE_OPTION, SORT_TYPE_OPTION } from "../../consts/index";
 
 Component({
   properties: {
@@ -8,8 +8,8 @@ Component({
   },
 
   data: {
-    bookTypeOption: BookTypeOption,
-    sortTypeOption: SortTypeOption,
+    bookTypeOption: BOOK_TYPE_OPTION,
+    sortTypeOption: SORT_TYPE_OPTION,
 
     schoolIndex: 0, // 默认的学院选项索引
     majorIndex: -1, // 默认的专业选项索引
@@ -30,7 +30,7 @@ Component({
       })
 
       // 当学院为“全部书籍”或“所有学院”时不需要额外选择专业
-      let school = BookTypeOption[e.detail.index].text
+      let school = BOOK_TYPE_OPTION[e.detail.index].text
       if (school === '全部书籍') {
         this.selectComponent('#book-type-menu').toggle(false)
         this.triggerEvent('changeType', ['全部书籍', ''])
@@ -46,7 +46,7 @@ Component({
       })
 
       this.selectComponent('#book-type-menu').toggle(false)
-      this.triggerEvent('changeType', [BookTypeOption[this.data.schoolIndex].text, e.detail.text])
+      this.triggerEvent('changeType', [BOOK_TYPE_OPTION[this.data.schoolIndex].text, e.detail.text])
     },
   }
 })

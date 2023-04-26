@@ -1,5 +1,5 @@
 // components/role-picker/index.ts
-import { Role } from "../../consts/index"
+import { ROLE } from "../../consts/index"
 
 Component({
   properties: {
@@ -9,13 +9,13 @@ Component({
   observers: {
     role: function () {
       if (!this.properties.role) {
-        this.triggerEvent("change", Role[0])
+        this.triggerEvent("change", ROLE[0])
       }
     }
   },
 
   data: {
-    columns: Role,
+    columns: ROLE,
     show: false,
   },
 

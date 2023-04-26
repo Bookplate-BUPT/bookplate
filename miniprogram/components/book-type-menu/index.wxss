@@ -1,6 +1,11 @@
 /* components/book-type-menu/index.wxss */
+.school {
+  font-size: 12px !important;
+}
+
 .major {
   font-weight: 400 !important;
+  font-size: 12px;
   color: var(--black-text);
 }
 
@@ -10,4 +15,8 @@
 
 .major-active {
   --tree-select-item-active-color: var(--green);
+}
+
+.sort-type {
+  font-size: 12px;
 }

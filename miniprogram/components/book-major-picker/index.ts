@@ -1,5 +1,5 @@
 // components/book-major-picker/index.ts
-import { BookSchoolWithMajor } from "../../consts/index";
+import { BOOK_SCHOOL_WITH_MAJOR } from "../../consts/index";
 
 Component({
   properties: {
@@ -10,10 +10,10 @@ Component({
   data: {
     columns: [
       {
-        values: Object.keys(BookSchoolWithMajor),
+        values: Object.keys(BOOK_SCHOOL_WITH_MAJOR),
       },
       {
-        values: BookSchoolWithMajor[Object.keys(BookSchoolWithMajor)[0] as keyof typeof BookSchoolWithMajor],
+        values: BOOK_SCHOOL_WITH_MAJOR[Object.keys(BOOK_SCHOOL_WITH_MAJOR)[0] as keyof typeof BOOK_SCHOOL_WITH_MAJOR],
       },
     ],
     show: false,
@@ -37,7 +37,7 @@ Component({
 
       // 修改第一列时，改变第二列的数据
       if (index === 0) {
-        let majorList = BookSchoolWithMajor[value[0] as keyof typeof BookSchoolWithMajor]
+        let majorList = BOOK_SCHOOL_WITH_MAJOR[value[0] as keyof typeof BOOK_SCHOOL_WITH_MAJOR]
         picker.setColumnValues(1, majorList)
       }
     },

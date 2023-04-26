@@ -1,5 +1,5 @@
 // components/major-picker/index.ts
-import { SchoolWithMajor } from "../../consts/index"
+import { SCHOOL_WITH_MAJOR } from "../../consts/index"
 
 Component({
   properties: {
@@ -11,8 +11,8 @@ Component({
     'school, major': function () {
       // 如果没有数据则附上初值
       if (!this.properties.school) {
-        let keyList = Object.keys(SchoolWithMajor)
-        this.triggerEvent("change", [keyList[0], SchoolWithMajor[keyList[0] as keyof typeof SchoolWithMajor][0]])
+        let keyList = Object.keys(SCHOOL_WITH_MAJOR)
+        this.triggerEvent("change", [keyList[0], SCHOOL_WITH_MAJOR[keyList[0] as keyof typeof SCHOOL_WITH_MAJOR][0]])
       }
     },
   },
@@ -20,10 +20,10 @@ Component({
   data: {
     columns: [
       {
-        values: Object.keys(SchoolWithMajor),
+        values: Object.keys(SCHOOL_WITH_MAJOR),
       },
       {
-        values: SchoolWithMajor[Object.keys(SchoolWithMajor)[0] as keyof typeof SchoolWithMajor],
+        values: SCHOOL_WITH_MAJOR[Object.keys(SCHOOL_WITH_MAJOR)[0] as keyof typeof SCHOOL_WITH_MAJOR],
       },
     ],
     show: false,
@@ -47,7 +47,7 @@ Component({
 
       // 修改第一列时，改变第二列的数据
       if (index === 0) {
-        let majorList = SchoolWithMajor[value[0] as keyof typeof SchoolWithMajor]
+        let majorList = SCHOOL_WITH_MAJOR[value[0] as keyof typeof SCHOOL_WITH_MAJOR]
         picker.setColumnValues(1, majorList)
       }
     },

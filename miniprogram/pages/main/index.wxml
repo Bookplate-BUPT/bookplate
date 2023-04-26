@@ -8,10 +8,10 @@
 
 <van-notice-bar class="notice-bar" left-icon="info-o" text="本平台仅涉及二手书意向沟通，不涉及金钱交易。" />
 
-<book-type-menu bind:changeType="onChangeType" bind:changeSort="onChangeSort" schoolType="{{ schoolType }}" sortType="{{ sortType }}"/>
+<book-type-menu bind:changeType="onChangeType" bind:changeSort="onChangeSort" schoolType="{{ schoolType }}" sortType="{{ sortType }}" />
 
-<scroll-view scroll-y style="height: {{ scrollViewHeight }}px;" refresher-enabled refresher-triggered="{{ triggered }}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
-  <view class="main-book-box" wx:for="{{ bookList }}" wx:key="_id">
+<scroll-view scroll-y style="height: {{ scrollViewHeight }}px;" refresher-enabled refresher-triggered="{{ isOnPullDownRefresh }}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
+  <view class="main-book-box" wx:for="{{ bookList }}" wx:key="_id" wx:if="{{ bookList.length }}">
     <van-cell-group inset custom-class="card">
       <van-swipe-cell right-width="{{ 100 }}">
         <main-book-card bookDB="{{ item }}" bind:tap="toBookDetail" data-book="{{ item }}" />
@@ -23,6 +23,10 @@
       </van-swipe-cell>
     </van-cell-group>
   </view>
+  <view wx:if="{{ !bookList.length }}" style="height: 80%; display: flex; align-items: center; justify-content: center;">
+    <van-empty image="https://img.yzcdn.cn/vant/custom-empty-image.png" description="这里没有书籍呀" />
+  </view>
 
+  <van-divider wx:if="{{ bookList.length && isNoMore }}" contentPosition="center" dashed style="margin-top: 16px;">没有更多啦</van-divider>
   <view style="height: 24px;" />
 </scroll-view>

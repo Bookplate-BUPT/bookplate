@@ -1,5 +1,6 @@
 import { convertDateToTimestamp, convertTimestampToTime, hasBookProperties } from "../utils/utils"
 import { Book, BookDB, DocumentId } from "../types/index"
+import { BOOK_LIMIT_NUM } from "../consts/index"
 
 // 通过 _id 获取书籍
 export const getBookById = (id: DocumentId): Promise<BookDB> => {
@@ -74,13 +75,19 @@ export const getBookList = (): Promise<BookDB[]> => {
 }
 
 // 按照某一列的排序获取固定数目的书籍列表
-export const getSortedBookList = (fieldPath: string, order?: string, limit?: number, skip?: number, condition?: DB.IQueryCondition): Promise<BookDB[]> => {
+export const getSortedBookList = (
+  fieldPath?: string,             // 排序字段
+  order?: string,                 // 升序降序
+  limit?: number,                 // 获取数目
+  skip?: number,                  // 选择跳过数目
+  condition?: DB.IQueryCondition  // 筛选条件
+): Promise<BookDB[]> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
       .where(condition ? condition : {})
-      .orderBy(fieldPath, order ? order : 'desc')
+      .orderBy(fieldPath ? fieldPath : 'create_time', order ? order : 'desc')
       .skip(skip ? skip : 0)
-      .limit(limit ? limit : 20)
+      .limit(limit ? limit : BOOK_LIMIT_NUM)
       .get()
       .then(res => {
         resolve(convertDateToTimestamp(res.data) as BookDB[])

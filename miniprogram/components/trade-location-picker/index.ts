@@ -1,5 +1,5 @@
 // components/trade-location-picker/index.ts
-import { TradeLocation } from "../../consts/index"
+import { TRADE_LOCATION } from "../../consts/index"
 
 Component({
   properties: {
@@ -7,7 +7,7 @@ Component({
   },
 
   data: {
-    columns: TradeLocation,
+    columns: TRADE_LOCATION,
     show: false,
   },
 

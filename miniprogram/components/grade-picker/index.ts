@@ -1,5 +1,5 @@
 // components/grade-picker/index.ts
-import { Grade } from "../../consts/index"
+import { GRADE } from "../../consts/index"
 
 Component({
   properties: {
@@ -10,13 +10,13 @@ Component({
     grade: function () {
       // 如果没有数据则附上初值
       if (!this.properties.grade) {
-        this.triggerEvent("change", Grade[0])
+        this.triggerEvent("change", GRADE[0])
       }
     }
   },
 
   data: {
-    columns: Grade,
+    columns: GRADE,
     show: false,
   },
 

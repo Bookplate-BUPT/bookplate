@@ -3,25 +3,32 @@ import { getLocalUserOpenId } from "../../services/users"
 import { getSortedBookList } from "../../services/books"
 import { BookDB, FavoriteDB } from "../../types/index"
 import { addFavorite, isFavorite } from "../../services/favorite"
-import { BookTypeOption, SortTypeOption } from "../../consts/index";
+import { BOOK_LIMIT_NUM, BOOK_TYPE_OPTION, SORT_TYPE_OPTION } from "../../consts/index";
 
 Page({
   data: {
     bookList: [] as BookDB[],
 
-    // 显示相关
-    scrollViewHeight: 0,
+    // 筛选条件
+    schoolType: BOOK_TYPE_OPTION[0].text,
+    majorType: BOOK_TYPE_OPTION[0].children ? BOOK_TYPE_OPTION[0].children[0].text : '',
+    sortType: SORT_TYPE_OPTION[0].value,
+    condition: {},                // 数据库筛选条件
 
-    schoolType: BookTypeOption[0].text,
-    sortType: SortTypeOption[0].value,
+    // 显示相关
+    scrollViewHeight: 0,          // 书籍列表元素应该有的长度
+    isOnPullDownRefresh: false,   // 是否正在下拉刷新，用于取消下拉刷新动画
+    isNoMore: false,              // 是否后续还有书籍
   },
 
   onLoad() {
     this.setScrollViewHeight()
 
-    getSortedBookList('create_time').then(res => {
+    // 按照默认的排序获取书籍
+    getSortedBookList().then(res => {
       this.setData({
         bookList: res,
+        isNoMore: res.length < BOOK_LIMIT_NUM,
       })
     })
   },
@@ -77,13 +84,73 @@ Page({
     this.setData({
       sortType: e.detail as unknown as string
     })
+
+    // 改变排序条件了，一切重新获取，故 skip 0
+    getSortedBookList(this.data.sortType, 'desc', BOOK_LIMIT_NUM, 0, this.data.condition).then(res => {
+      this.setData({
+        bookList: res,
+        isNoMore: res.length < BOOK_LIMIT_NUM,  // 获取的数量若不足够，说明后续已经没有书籍了
+      })
+    })
   },
 
   // 书籍筛选条件改变时调用
   onChangeType(e: WechatMiniprogram.TouchEvent) {
-    console.log(e.detail)
+    // 根据学院和专业生成数据库筛选条件
+    let condition = e.detail[0] === '全部书籍' ? {} : {
+      school: e.detail[0],
+      major: e.detail[1] === '所有专业' ? undefined : e.detail[1],
+    }
+
     this.setData({
-      schoolType: e.detail[0]
+      schoolType: e.detail[0],
+      majorType: e.detail[1],
+      condition: condition,
+    })
+
+    // 改变筛选条件了，一切重新获取，故 skip 0
+    getSortedBookList(this.data.sortType, 'desc', BOOK_LIMIT_NUM, 0, this.data.condition).then(res => {
+      this.setData({
+        bookList: res,
+        isNoMore: res.length < BOOK_LIMIT_NUM,  // 获取的数量若不足够，说明后续已经没有书籍了
+      })
+    })
+  },
+
+  // 下拉刷新时触发
+  onPullDownRefresh() {
+    wx.showLoading({
+      title: '正在刷新'
+    })
+
+    // 下拉刷新时重新获取，skip 设 0
+    getSortedBookList(this.data.sortType, 'desc', BOOK_LIMIT_NUM, 0, this.data.condition).then(res => {
+      wx.hideLoading()
+
+      this.setData({
+        bookList: res,
+        isNoMore: res.length < BOOK_LIMIT_NUM,
+        isOnPullDownRefresh: false,
+      })
+    })
+  },
+
+  // 滑动触底时触发
+  onReachBottom() {
+    if (this.data.isNoMore) return
+
+    wx.showLoading({
+      title: '正在加载'
+    })
+
+    // 获取当前筛选条件下后续的书籍
+    getSortedBookList(this.data.sortType, 'desc', BOOK_LIMIT_NUM, this.data.bookList.length, this.data.condition).then(res => {
+      wx.hideLoading()
+
+      this.setData({
+        bookList: this.data.bookList.concat(res),
+        isNoMore: res.length < BOOK_LIMIT_NUM,  // 获取的数量若不足够，说明后续已经没有书籍了
+      })
     })
   },
 })
