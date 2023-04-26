@@ -44,12 +44,12 @@ export const convertDateToTimestamp = <T extends Object>(obj: T): T => {
 // 将对象中的时间戳转换为 Date 类型，将数据上传至数据库时调用
 // 但一般情况下，上传后往往还会有后续的数据操作
 // 为了避免浅拷贝导致本地变量的时间出现格式差错，此处采用深拷贝
-export const convertTimestampToTime = <T extends Object>(obj: T): T => {
+export const convertTimestampToDate = <T extends Object>(obj: T): T => {
   const res = deepCopy(obj)
   for (let key in res) {
     // 递归转换
     if (res[key] instanceof Object) {
-      res[key] = convertTimestampToTime(res[key] as Object) as T[Extract<keyof T, string>]
+      res[key] = convertTimestampToDate(res[key] as Object) as T[Extract<keyof T, string>]
     }
     // 字段名拥有 time 单词且类型为时间戳时才进行转换
     if (key.includes('time') && typeof res[key] === 'number') {

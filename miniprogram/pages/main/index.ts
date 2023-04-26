@@ -187,7 +187,7 @@ Page({
         wx.navigateTo({
           url: `../searchResult/index?isbn=${res.result}`
         })
-      }).catch(res => {
+      }).catch(() => {
         wx.showToast({
           title: '识别失败',
           icon: 'error',

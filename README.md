@@ -58,7 +58,7 @@ yarn install
    >
    > 此处挑出一个基本的 services 里的文件，如果你不喜欢 `user.ts` 的话，也可以查看别的 services 文件夹下的文件
    >
-   > 你会经常看到 `convertDateToTimestamp` 和 `convertTimestampToTime` 方法，现在你可以回头去看看之前跳过的 `Time` 类型
+   > 你会经常看到 `convertDateToTimestamp` 和 `convertTimestampToDate` 方法，现在你可以回头去看看之前跳过的 `Time` 类型
    >
    > 理解本项目对于时间数据是如何进行处理的
 

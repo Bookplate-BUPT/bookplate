@@ -23,8 +23,8 @@ export type DocumentId = string | number
 // 但在本地开发过程中，Date 的传递经常会出现空对象的情况
 // 比如父组件向子组件传递含有 Date 的 Object，或是页面间的传递
 // 为了省去开发中为了传递数据而来回将 Date 改变成时间戳的不便
-// 每当从数据库获取数据时，结果里的 Date 就转成时间戳（也就是说，需要对所有数据库获取结果调用一次 convertTimestampToTime 方法）
-// 而上传数据至数据库时再从时间戳转成 Date 对象（也就是说，需要对所有数据库上传结果调用一次 convertTimestampToTime 方法）
+// 每当从数据库获取数据时，结果里的 Date 就转成时间戳（也就是说，需要对所有数据库获取结果调用一次 convertDateToTimestamp 方法）
+// 而上传数据至数据库时再从时间戳转成 Date 对象（也就是说，需要对所有数据库上传结果调用一次 convertTimestampToDate 方法）
 // 此外，Date 表示的只是本地时间，为保证时间正确应采用 db.serverDate()
 
 // 总结：

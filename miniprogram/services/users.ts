@@ -1,4 +1,4 @@
-import { convertDateToTimestamp, convertTimestampToTime, hasUserProperties } from "../utils/utils"
+import { convertDateToTimestamp, convertTimestampToDate, hasUserProperties } from "../utils/utils"
 import { BookplateApp, DocumentId, User, UserDB } from "../types/index"
 const app = getApp<BookplateApp>()
 
@@ -122,7 +122,7 @@ export const updateUserById = (user: User, docId: DocumentId): Promise<DB.IUpdat
     wx.cloud.database().collection('users')
       .doc(docId)
       .update({
-        data: convertTimestampToTime(user)
+        data: convertTimestampToDate(user)
       })
       .then(res => {
         resolve(res as DB.IUpdateResult)

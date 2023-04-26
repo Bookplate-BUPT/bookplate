@@ -1,4 +1,4 @@
-import { convertDateToTimestamp, convertTimestampToTime, hasBookProperties } from "../utils/utils"
+import { convertDateToTimestamp, convertTimestampToDate, hasBookProperties } from "../utils/utils"
 import { Book, BookDB, DocumentId } from "../types/index"
 import { BOOK_LIMIT_NUM } from "../consts/index"
 
@@ -38,7 +38,7 @@ export const updateBookById = (book: Book, id: DocumentId): Promise<DB.IUpdateRe
     wx.cloud.database().collection('books')
       .doc(id)
       .update({
-        data: convertTimestampToTime(book)
+        data: convertTimestampToDate(book)
       })
       .then(res => {
         resolve(res as DB.IUpdateResult)
