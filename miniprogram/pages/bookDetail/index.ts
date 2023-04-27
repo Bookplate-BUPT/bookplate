@@ -1,7 +1,7 @@
 // pages/bookDetail/index.ts
-import { addFavorite, getFavoriteByBookId, getFavoriteById, removeFavorite } from "../../services/favorite";
+import { addFavorite, getFavoriteByBookId, removeFavorite } from "../../services/favorite";
 import { getLocalUserOpenId, getUserPublicInfo } from "../../services/users";
-import { BookDB, FavoriteDB, User } from "../../types/index";
+import { BookDB, DocumentId, FavoriteDB, User } from "../../types/index";
 
 interface Options {
   bookDB?: string   // encode 后的 JSON 序列化书籍字符串
@@ -12,7 +12,7 @@ Page({
     bookDB: {} as BookDB, // 书籍信息
     seller: {} as User,   // 卖家信息
 
-    favoriteDB: {} as FavoriteDB  // 关于此书籍的收藏信息
+    favoriteId: '' as DocumentId  // 关于此书籍的收藏信息
   },
 
   async onLoad(options: Options) {
@@ -23,7 +23,7 @@ Page({
 
       this.setData({
         seller: await getUserPublicInfo(this.data.bookDB._openid),
-        favoriteDB: await getFavoriteByBookId(getLocalUserOpenId(), this.data.bookDB._id),
+        favoriteId: (await getFavoriteByBookId(getLocalUserOpenId(), this.data.bookDB._id))._id,
       })
     }
   },
@@ -37,7 +37,7 @@ Page({
   },
 
   // 点击收藏按钮触发
-  async onFavorite() {
+  onFavorite() {
     // 无法收藏自己的书籍
     if (this.data.bookDB._openid === getLocalUserOpenId()) {
       wx.showToast({
@@ -48,14 +48,14 @@ Page({
     }
 
     // 取消收藏
-    if (this.data.favoriteDB && this.data.favoriteDB._id) {
-      removeFavorite(this.data.favoriteDB._id).then(() => {
+    if (this.data.favoriteId) {
+      removeFavorite(this.data.favoriteId).then(() => {
         wx.showToast({
           title: '取消收藏',
           icon: 'success'
         })
         this.setData({
-          favoriteDB: {} as FavoriteDB
+          favoriteId: ''
         })
       })
       return
@@ -65,13 +65,13 @@ Page({
       book_id: this.data.bookDB._id
     } as FavoriteDB
 
-    addFavorite(favorite).then(async res => {
+    addFavorite(favorite).then(res => {
       wx.showToast({
         title: '收藏成功',
         icon: 'success',
       })
       this.setData({
-        favoriteDB: await getFavoriteById(res._id),
+        favoriteId: res._id,
       })
     })
   },
