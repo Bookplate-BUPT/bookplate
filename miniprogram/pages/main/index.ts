@@ -2,7 +2,7 @@
 import { getLocalUserOpenId } from "../../services/users"
 import { getSortedBookList } from "../../services/books"
 import { BookDB, FavoriteDB } from "../../types/index"
-import { addFavorite, isFavorite } from "../../services/favorite"
+import { addFavorite, getFavoriteByBookId } from "../../services/favorite"
 import { BOOK_LIMIT_NUM, BOOK_TYPE_OPTION, SORT_TYPE_OPTION } from "../../consts/index";
 
 Page({
@@ -52,8 +52,10 @@ Page({
       return
     }
 
+    let favoriteDB = await getFavoriteByBookId(getLocalUserOpenId(), e.currentTarget.dataset.book._id)
+
     // 无法重复收藏
-    if (await isFavorite(e.currentTarget.dataset.book._id)) {
+    if (favoriteDB) {
       wx.showToast({
         title: '已在收藏列表中',
         icon: 'none'

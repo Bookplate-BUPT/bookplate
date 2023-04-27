@@ -1,18 +1,30 @@
-import { hasFavoriteProperties } from "../utils/utils"
-import { DocumentId, Favorite } from "../types/index"
-import { getLocalUserOpenId } from "./users"
+import { convertDateToTimestamp, hasFavoriteProperties } from "../utils/utils"
+import { DocumentId, Favorite, FavoriteDB } from "../types/index"
 
-// 检查是否已经收藏书籍
-export const isFavorite = (id: DocumentId): Promise<boolean> => {
+// 通过 docId 获取收藏信息
+export const getFavoriteById = (id: DocumentId): Promise<FavoriteDB> => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.database().collection('favorites')
+      .doc(id)
+      .get()
+      .then(res => {
+        resolve(convertDateToTimestamp(res.data) as FavoriteDB)
+      })
+      .catch(reject)
+  })
+}
+
+// 通过书籍 ID 获取收藏信息
+export const getFavoriteByBookId = (openid: string, id: DocumentId): Promise<FavoriteDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('favorites')
       .where({
-        _openid: getLocalUserOpenId(),
+        _openid: openid,
         book_id: id,
       })
       .get()
       .then(res => {
-        resolve(res.data.length > 0)
+        resolve(convertDateToTimestamp(res.data[0]) as FavoriteDB)
       })
       .catch(reject)
   })
@@ -38,11 +50,12 @@ export const addFavorite = (favorite: Favorite): Promise<DB.IAddResult> => {
 // 取消收藏
 export const removeFavorite = (id: DocumentId): Promise<DB.IRemoveResult> => {
   return new Promise((resolve, reject) => {
-    // wx.cloud.database().collection('favorites')
-    //   .where({
-    //     _openid: getLocalUserOpenId(),
-    //     book_id: id,
-    //   })
-
+    wx.cloud.database().collection('favorites')
+      .doc(id)
+      .remove()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(reject)
   })
 }
