@@ -58,12 +58,10 @@ yarn install
    >
    > 此处挑出一个基本的 services 里的文件，如果你不喜欢 `user.ts` 的话，也可以查看别的 services 文件夹下的文件
    >
-   > 你会经常看到 `convertDateToTimestamp` 和 `convertTimestampToDate` 方法，现在你可以回头去看看之前跳过的 `Time` 类型
-   >
-   > 理解本项目对于时间数据是如何进行处理的
-
+   > 你会经常看到 `convertDateToTimestamp` 和 `convertTimestampToDate` 方法，现在你可以回头去看看之前跳过的 `Time` 类型，理解本项目是如何处理时间数据的
+   
 4. 阅读 `pages/personalInfo`
 
-   > 这一步算是所有上述知识的一个巩固，是对项目封装和小程序基础知识的一个综合运用
+   > 这一步算是所有上述知识的一个巩固，此页面包含非常多的知识点，这是对项目封装和小程序基础知识的一个综合运用
    >
    > 同样，如果你不喜欢这个页面的话，也可以查看别的页面
