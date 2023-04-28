@@ -44,7 +44,7 @@ export const ROLE = ['游客', '北邮人']
 export const TRADE_LOCATION = ['沙河校区', '西土城校区', '沙河或西土城校区']
 
 // 用户字段
-export const USER_KEYS = ['avatar', 'grade', 'major', 'nickname', 'register_time', 'role', 'school']
+export const USER_KEYS = ['avatar', 'create_time', 'grade', 'major', 'nickname', 'role', 'school']
 
 // 书籍字段
 export const BOOK_KEYS = ['author', 'create_time', 'contact', 'description', 'favorites', 'images', 'introduction', 'isbn', 'major', 'name', 'original_price', 'publish_time', 'publisher', 'school', 'state', 'trade_location', 'views']
@@ -395,4 +395,4 @@ export const SORT_TYPE_OPTION = [
 ]
 
 // 一次加载获取的书籍数量
-export const BOOK_LIMIT_NUM = 5
+export const BOOK_LIMIT_NUM = 20

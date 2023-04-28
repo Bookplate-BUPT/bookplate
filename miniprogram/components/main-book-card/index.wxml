@@ -1,6 +1,6 @@
 <!--components/main-book-card/index.wxml-->
 
-<van-card price="{{ bookDB.price }}" thumb="{{ bookDB.images[0] }}" origin-price="{{ bookDB.original_price }}" tag="{{ isNew ? '最新' : '' }}">
+<van-card price="{{ bookDB.price }}" thumb="{{ bookDB.images[0] }}" origin-price="{{ bookDB.original_price }}" tag="{{ isNew ? '最新' : '' }}" custom-class="main-book-card">
   <view slot="desc" class="card-book-introduction">{{ bookDB.introduction }}</view>
   <view slot="title" class="card-book-name">{{ bookDB.name }}</view>
 </van-card>

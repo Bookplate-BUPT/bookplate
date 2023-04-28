@@ -40,10 +40,10 @@ export interface DBIdentifier {
 
 export interface User {
   avatar: string            // 头像
+  create_time: Time         // 注册时间
   grade: string             // 年级
   major: string             // 专业
   nickname: string          // 昵称
-  register_time: Time       // 注册时间
   role: string              // 身份
   school: string            // 学院
 }
@@ -81,6 +81,10 @@ export interface Favorite {
   create_time: Time         // 收藏时间
 }
 export interface FavoriteDB extends Favorite, DBIdentifier { }
+// favorites 表和 books 表进行表连接后的结果类型
+export interface FaVoriteAggregateResult extends FavoriteDB {
+  book_detail: Book[]
+}
 
 export interface Message {
   content: string           // 消息内容

@@ -100,6 +100,10 @@ Page({
           user: removeDBIdentifier(await getUserById(userId))
         })
       } else { // 有则更新用户信息
+        // 补充一下缺失的字段信息
+        this.setData({
+          ['user.create_time']: userDB.create_time
+        })
         updateUserById(this.data.user, userDB._id)
       }
     }

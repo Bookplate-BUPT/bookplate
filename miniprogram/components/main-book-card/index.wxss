@@ -19,3 +19,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
+.main-book-card {
+  background: #FFFFFF !important;
+}
