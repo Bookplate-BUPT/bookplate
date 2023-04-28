@@ -21,9 +21,11 @@ Page({
         bookDB: JSON.parse(decodeURIComponent(options.bookDB))
       })
 
+      let favoriteDB = await getFavoriteByBookId(getLocalUserOpenId(), this.data.bookDB._id)
+
       this.setData({
         seller: await getUserPublicInfo(this.data.bookDB._openid),
-        favoriteId: (await getFavoriteByBookId(getLocalUserOpenId(), this.data.bookDB._id))._id,
+        favoriteId: favoriteDB ? favoriteDB._id : undefined,
       })
     }
   },
