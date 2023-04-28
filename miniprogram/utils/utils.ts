@@ -29,13 +29,23 @@ export const removeDBIdentifier = <T extends DBIdentifier>(obj: T): Omit<T, keyo
 
 // 将对象中的 Date 类型转换为时间戳，一般在获取数据库数据的时候调用
 export const convertDateToTimestamp = <T extends Object>(obj: T): T => {
+  // 先检查是不是数组
+  if (Array.isArray(obj)) {
+    return obj.map(item => convertDateToTimestamp(item)) as unknown as T
+  }
+
   for (let key in obj) {
     // 递归转换
     if (obj[key] instanceof Object) {
       obj[key] = convertDateToTimestamp(obj[key] as Object) as T[Extract<keyof T, string>]
     }
+    // 字段为 Date 类型进行转换
     if (obj[key] instanceof Date) {
-      obj[key] = (obj[key] as unknown as Date).getTime() as unknown as T[Extract<keyof T, string>]
+      obj[key] = (obj[key] as Date).getTime() as unknown as T[Extract<keyof T, string>]
+    }
+    // 有些情况下，数据库中的 Date 对象会被转换为字符串，此时也需要转换
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(obj[key] as unknown as string)) {
+      obj[key] = new Date(obj[key] as unknown as string).getTime() as unknown as T[Extract<keyof T, string>]
     }
   }
   return obj
@@ -51,9 +61,9 @@ export const convertTimestampToDate = <T extends Object>(obj: T): T => {
     if (res[key] instanceof Object) {
       res[key] = convertTimestampToDate(res[key] as Object) as T[Extract<keyof T, string>]
     }
-    // 字段名拥有 time 单词且类型为时间戳时才进行转换
-    if (key.includes('time') && typeof res[key] === 'number') {
-      res[key] = new Date(res[key] as unknown as number) as unknown as T[Extract<keyof T, string>]
+    // 字段为时间戳才进行转换
+    if (typeof res[key] === 'number' && res[key] as number > 1000000000000 && res[key] as number < 10000000000000) {
+      res[key] = new Date(res[key] as number) as unknown as T[Extract<keyof T, string>]
     }
   }
   return res
