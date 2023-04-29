@@ -69,6 +69,35 @@ export const convertTimestampToDate = <T extends Object>(obj: T): T => {
   return res
 }
 
+// 对比两个对象是否相等
+export const isEqual = <T extends { [key: string]: any }>(obj1: T, obj2: T): boolean => {
+  // 先检查是不是数组
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    if (obj1.length !== obj2.length) return false
+    return obj1.every((item, index) => isEqual(item, obj2[index]))
+  }
+
+  // 检查是否为基本类型
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 === null || obj2 === null) {
+    return obj1 === obj2
+  }
+
+  // 检查是否为 Date 对象
+  if (obj1 instanceof Date && obj2 instanceof Date) {
+    return obj1.getTime() === obj2.getTime()
+  }
+
+  // 如果都为对象
+  if (obj1 instanceof Object && obj2 instanceof Object) {
+    const keys1 = Object.keys(obj1)
+    const keys2 = Object.keys(obj2)
+    if (keys1.length !== keys2.length) return false
+    return keys1.every(key => isEqual(obj1[key], obj2[key]))
+  }
+
+  return false
+}
+
 // 以下属性检查是仅用于开发者的
 // 在开发中，开发者错误上传了缺少字段的数据时抛出错误
 // 而在判断用户信息填写是否为空时不应使用

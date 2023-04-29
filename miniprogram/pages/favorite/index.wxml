@@ -1,2 +1,11 @@
 <!--pages/favorite/index.wxml-->
-<text>pages/favorite/index.wxml</text>
+
+<view class="main-book-box" wx:for="{{ bookList }}" wx:key="_id" wx:if="{{ bookList.length }}">
+  <van-cell-group inset custom-class="card">
+    <main-book-card bookDB="{{ item.book_detail[0] }}" bind:tap="toBookDetail" data-book="{{ item.book_detail[0] }}" />
+  </van-cell-group>
+</view>
+
+<view wx:if="{{ !bookList.length }}" style="height: 80%; display: flex; align-items: center; justify-content: center;">
+  <van-empty image="https://img.yzcdn.cn/vant/custom-empty-image.png" description="这里没有书籍呀" />
+</view>

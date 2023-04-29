@@ -1,5 +1,5 @@
 import { convertDateToTimestamp, hasFavoriteProperties } from "../utils/utils"
-import { DocumentId, Favorite, FavoriteDB } from "../types/index"
+import { DocumentId, Favorite, FaVoriteAggregateResult, FavoriteDB } from "../types/index"
 
 // 通过 docId 获取收藏信息
 export const getFavoriteById = (id: DocumentId): Promise<FavoriteDB> => {
@@ -57,5 +57,22 @@ export const removeFavorite = (id: DocumentId): Promise<DB.IRemoveResult> => {
         resolve(res)
       })
       .catch(reject)
+  })
+}
+
+// 获取收藏列表
+export const getFavoriteList = (openid: string, limit: number, skip: number): Promise<FaVoriteAggregateResult[]> => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'bookplateFunctions',
+      data: {
+        type: 'getFavoriteList',
+        openid: openid,
+        limit: limit,
+        skip: skip,
+      }
+    }).then(res => {
+      resolve(convertDateToTimestamp((res.result as any).list) as FaVoriteAggregateResult[])
+    }).catch(reject)
   })
 }

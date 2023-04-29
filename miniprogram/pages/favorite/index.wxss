@@ -1,1 +1,8 @@
 /* pages/favorite/index.wxss */
+Page {
+  padding-bottom: 24px;
+}
+
+.main-book-box {
+  margin: 12px 0;
+}
