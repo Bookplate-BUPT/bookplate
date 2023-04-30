@@ -23,3 +23,33 @@
 .main-book-card {
   background: #FFFFFF !important;
 }
+
+.main-book-card-thumb-box {
+  width: 100%;
+  height: 100%;
+}
+
+.main-book-card-thumb {
+  width: 100%;
+  height: 100%;
+}
+
+.main-book-card-selling {
+  position: absolute;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-book-card-thumb-text {
+  background: rgba(250, 250, 250, 0.8);
+  width: 100%;
+  text-align: center;
+  padding: 8px 0;
+}

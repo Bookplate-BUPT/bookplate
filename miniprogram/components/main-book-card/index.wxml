@@ -1,6 +1,17 @@
 <!--components/main-book-card/index.wxml-->
 
-<van-card price="{{ bookDB.price }}" thumb="{{ bookDB.images[0] }}" origin-price="{{ bookDB.original_price }}" tag="{{ isNew ? '最新' : '' }}" custom-class="main-book-card">
+<van-card price="{{ bookDB.price }}" origin-price="{{ bookDB.original_price }}" tag="{{ isNew ? '最新' : '' }}" custom-class="main-book-card">
   <view slot="desc" class="card-book-introduction">{{ bookDB.introduction }}</view>
   <view slot="title" class="card-book-name">{{ bookDB.name }}</view>
+  <view slot="thumb" class="main-book-card-thumb-box">
+    <image mode="aspectFit" src="{{ bookDB.images[0] }}" class="main-book-card-thumb" />
+
+    <view wx:if="{{ bookDB.state === 1 }}" class="main-book-card-selling">
+      <view class="main-book-card-thumb-text">正在出售中</view>
+    </view>
+
+    <view wx:if="{{ bookDB.state === 2 }}" class="main-book-card-selling">
+      <view class="main-book-card-thumb-text">已售出</view>
+    </view>
+  </view>
 </van-card>
