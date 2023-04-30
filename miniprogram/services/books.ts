@@ -26,7 +26,7 @@ export const addBook = (book: Book): Promise<DB.IAddResult> => {
         data: book
       })
       .then(res => {
-        resolve(res as DB.IAddResult)
+        resolve(res)
       })
       .catch(reject)
   })

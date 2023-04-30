@@ -53,6 +53,12 @@ export interface User {
 // 所以 UserDB 用来表示数据库的返回结果类型
 // 而 User 表示正常操作数据库的上传数据类型
 export interface UserDB extends User, DBIdentifier { }
+// 可公开的用户信息的类型定义
+export type UserPublicInfo = Omit<UserDB, keyof {
+  _id: DocumentId,
+  create_time: Time,
+  major: string,
+}>
 
 export interface Book {
   author: string            // 作者
@@ -70,7 +76,7 @@ export interface Book {
   publish_time: string      // 出版时间
   publisher: string         // 出版社
   school: string            // 学院
-  state: number             // 书籍状态，0表示上架中，1表示交易中，2表示已卖出
+  state: number             // 书籍状态，0 表示上架中，1 表示交易中，2 表示已卖出
   trade_location: string    // 交易地点
   views: number             // 浏览量
 }
@@ -96,16 +102,19 @@ export interface Message {
 export interface MessageDB extends Message, DBIdentifier { }
 
 export interface Relationship {
+  create_time: Time         // 关系的建立时间
   is_readed: boolean        // 最后一次消息是否被接受者阅读
   last_content: string      // 记录聊天中最后一条发送的消息的内容
-  last_content_type: number // 最后一条消息类型
+  last_content_type: number // 最后一条消息类型，0 表示文字
   last_create_time: Time    // 最后一条消息的发送时间
   last_send_number: number  // 当一方未读时，其所积累的未读信息条数
   last_sender: string       // 最后一条消息的发送者 openid
-  user1: string             // 用户 1 的 openid
+  user1_openid: string      // 用户 1 的 openid
   user1_avatar: string      // 用户 1 的头像
-  user2: string             // 用户 2 的 openid
+  user1_nickname: string    // 用户 1 的昵称
+  user2_openid: string      // 用户 2 的 openid
   user2_avatar: string      // 用户 2 的头像
+  user2_nickname: string    // 用户 2 的昵称
 }
 export interface RelationshipDB extends Relationship, DBIdentifier { }
 
@@ -114,7 +123,7 @@ export interface Trade {
   buyer: string                 // 买家 openid
   contact_information: string   // 买家的联系方式
   seller: string                // 卖家 openid
-  state: number                 // 交易的状态，0表示未完成，1表示待收货，2表示已完成，3表示已取消
+  state: number                 // 交易的状态，0 表示未完成，1 表示待收货，2 表示已完成，3 表示已取消
   state_one_time: Time          // state 设置为 1 的时间
   state_three_time: Time        // state 设置为 3 的时间
   state_two_time: Time          // state 设置为 2 的时间

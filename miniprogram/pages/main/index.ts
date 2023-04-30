@@ -26,7 +26,7 @@ Page({
     this.setScrollViewHeight()
 
     // 按照默认的排序获取书籍
-    getSortedBookList().then(res => {
+    getSortedBookList('create_time', 'desc', BOOK_LIMIT_NUM, 0, { state: 0 }).then(res => {
       this.setData({
         bookList: res,
         isNoMore: res.length < BOOK_LIMIT_NUM,
@@ -103,6 +103,7 @@ Page({
     let condition = e.detail[0] === '全部书籍' ? {} : {
       school: e.detail[0],
       major: e.detail[1] === '所有专业' ? undefined : e.detail[1],
+      state: 0,   // 未售出的书籍状态
     }
 
     this.setData({

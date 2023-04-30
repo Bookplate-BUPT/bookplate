@@ -41,7 +41,7 @@ export const addFavorite = (favorite: Favorite): Promise<DB.IAddResult> => {
         data: favorite
       })
       .then(res => {
-        resolve(res as DB.IAddResult)
+        resolve(res)
       })
       .catch(reject)
   })

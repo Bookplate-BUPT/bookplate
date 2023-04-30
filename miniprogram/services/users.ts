@@ -1,5 +1,5 @@
 import { convertDateToTimestamp, convertTimestampToDate, hasUserProperties } from "../utils/utils"
-import { BookplateApp, DocumentId, User, UserDB } from "../types/index"
+import { BookplateApp, DocumentId, User, UserDB, UserPublicInfo } from "../types/index"
 const app = getApp<BookplateApp>()
 
 // 在实际开发中，直接使用 app.globalData.xxx 也是可以的
@@ -110,7 +110,7 @@ export const addUser = (user: User): Promise<DB.IAddResult> => {
         data: user
       })
       .then(res => {
-        resolve(res as DB.IAddResult)
+        resolve(res)
       })
       .catch(reject)
   })
@@ -132,7 +132,7 @@ export const updateUserById = (user: User, docId: DocumentId): Promise<DB.IUpdat
 }
 
 // 获取用户信息
-export const getUserPublicInfo = (openid: string): Promise<User> => {
+export const getUserPublicInfo = (openid: string): Promise<UserPublicInfo> => {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name: 'bookplateFunctions',
@@ -141,7 +141,7 @@ export const getUserPublicInfo = (openid: string): Promise<User> => {
         openid: openid,
       }
     }).then(res => {
-      resolve(res.result as User)
+      resolve(res.result as UserPublicInfo)
     }).catch(reject)
   })
 }
