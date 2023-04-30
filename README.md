@@ -48,7 +48,7 @@ yarn install
 
 2. 阅读 `types/index.ts` （可以先不用看 `Time` 类型）
 
-   > 在这一步，你要理解项目中自定义的 `普通类型` 和 `DB类型` ，理解它们该在什么场合使用
+   > 在这一步，你要理解项目中自定义的 `普通类型` 和 `DB类型`（即 `Database类型`），理解它们该在什么场合使用
    >
    > 同时你也可以看看 `utils/utils/ts` 中的 `removeDBIdentifier` 方法，这是它们的转换
 
@@ -59,9 +59,16 @@ yarn install
    > 此处挑出一个基本的 services 里的文件，如果你不喜欢 `user.ts` 的话，也可以查看别的 services 文件夹下的文件
    >
    > 你会经常看到 `convertDateToTimestamp` 和 `convertTimestampToDate` 方法，现在你可以回头去看看之前跳过的 `Time` 类型，理解本项目是如何处理时间数据的
-   
-4. 阅读 `pages/personalInfo`
+
+4. 阅读 `utils/utils.ts`
+
+   > 这一步你只需要理解里面有哪些方法，起到了什么作用就可以
+   >
+   > 如果你对 JavaScript/TypeScript 有足够基础的话，也不是不可以试着去理解里面每一行代码做了什么
+
+5. 阅读 `pages/personalInfo`
 
    > 这一步算是所有上述知识的一个巩固，此页面包含非常多的知识点，这是对项目封装和小程序基础知识的一个综合运用
    >
    > 同样，如果你不喜欢这个页面的话，也可以查看别的页面
+
