@@ -97,9 +97,6 @@ export const getUserById = (id: DocumentId): Promise<UserDB> => {
 
 // 添加新用户
 export const addUser = (user: User): Promise<DB.IAddResult> => {
-  // 对于所有的添加操作，添加时间应该在对应的 add 方法里完成
-  user.create_time = wx.cloud.database().serverDate()
-
   // 对于所有往数据库添加的数据，应该至少有一个内容为空的字段
   // 而不是没有这个字段
   if (!hasUserProperties(user)) return Promise.reject(new Error('缺少用户属性'))

@@ -129,6 +129,7 @@ Page({
     } else { // 添加新书籍
       this.setData({
         ['book.contact']: this.data.book.contact === undefined ? '' : this.data.book.contact,
+        ['book.create_time']: wx.cloud.database().serverDate(),
         ['book.favorites']: 0,
         ['book.state']: 0,
         ['book.views']: 0,

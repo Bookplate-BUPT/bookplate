@@ -17,7 +17,6 @@ export const getBookById = (id: DocumentId): Promise<BookDB> => {
 
 // 添加书籍
 export const addBook = (book: Book): Promise<DB.IAddResult> => {
-  book.create_time = wx.cloud.database().serverDate()
   if (!hasBookProperties(book)) return Promise.reject(new Error('缺少书籍属性'))
 
   return new Promise((resolve, reject) => {

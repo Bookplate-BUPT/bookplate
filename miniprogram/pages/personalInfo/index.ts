@@ -94,6 +94,9 @@ Page({
 
       // 如果没有则添加新用户
       if (!userDB) {
+        this.setData({
+          ['user.create_time']: wx.cloud.database().serverDate()
+        })
         let userId = (await addUser(this.data.user))._id
         setLocalUserId(userId)
         this.setData({
