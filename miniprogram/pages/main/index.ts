@@ -1,5 +1,5 @@
 // pages/main/index.ts
-import { getLocalUserOpenid } from "../../services/users"
+import { getLocalUserOpenid, isLogin } from "../../services/users"
 import { getSortedBookList } from "../../services/books"
 import { BookDB, FavoriteDB } from "../../types/index"
 import { addFavorite, getFavoriteByBookID } from "../../services/favorite"
@@ -43,6 +43,15 @@ Page({
 
   // 点击收藏按钮触发
   async onFavorite(e: WechatMiniprogram.TouchEvent) {
+    // 未登录时不能收藏
+    if (!isLogin()) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'error'
+      })
+      return
+    }
+
     // 无法收藏自己的书籍
     if (e.currentTarget.dataset.book._openid === getLocalUserOpenid()) {
       wx.showToast({
