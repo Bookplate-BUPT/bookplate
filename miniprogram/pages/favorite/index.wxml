@@ -6,6 +6,6 @@
   </van-cell-group>
 </view>
 
-<view wx:if="{{ !bookList.length }}" style="height: 80%; display: flex; align-items: center; justify-content: center;">
-  <van-empty image="https://img.yzcdn.cn/vant/custom-empty-image.png" description="这里没有书籍呀" />
+<view wx:if="{{ !bookList.length }}" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+  <van-empty image="https://img.yzcdn.cn/vant/custom-empty-image.png" description="还没有收藏任何书籍" />
 </view>

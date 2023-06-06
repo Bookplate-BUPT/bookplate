@@ -1,6 +1,6 @@
 import { DBIdentifier } from '../types/index'
 import { Book, User } from "../types"
-import { BOOK_KEYS, FAVORITE_KEYS, USER_KEYS } from "../consts/index"
+import { BOOK_KEYS, FAVORITE_KEYS, RELATIONSHIP_KEYS, USER_KEYS } from "../consts/index"
 
 // 深拷贝
 export const deepCopy = <T extends Object>(obj: T): T => {
@@ -41,7 +41,7 @@ export const convertDateToTimestamp = <T extends Object>(obj: T): T => {
     }
     // 字段为 Date 类型进行转换
     if (obj[key] instanceof Date) {
-      obj[key] = (obj[key] as Date).getTime() as unknown as T[Extract<keyof T, string>]
+      obj[key] = (obj[key] as unknown as Date).getTime() as unknown as T[Extract<keyof T, string>]
     }
     // 有些情况下，数据库中的 Date 对象会被转换为字符串，此时也需要转换
     if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(obj[key] as unknown as string)) {
@@ -62,8 +62,8 @@ export const convertTimestampToDate = <T extends Object>(obj: T): T => {
       res[key] = convertTimestampToDate(res[key] as Object) as T[Extract<keyof T, string>]
     }
     // 字段为时间戳才进行转换
-    if (typeof res[key] === 'number' && res[key] as number > 1000000000000 && res[key] as number < 10000000000000) {
-      res[key] = new Date(res[key] as number) as unknown as T[Extract<keyof T, string>]
+    if (typeof res[key] === 'number' && res[key] as unknown as number > 1000000000000 && res[key] as unknown as number < 10000000000000) {
+      res[key] = new Date(res[key] as unknown as number) as unknown as T[Extract<keyof T, string>]
     }
   }
   return res
@@ -120,4 +120,9 @@ export const hasBookProperties = (obj: Book): boolean => {
 // 检查对象是否包含所有收藏属性
 export const hasFavoriteProperties = (obj: any): boolean => {
   return hasAllProperties(obj, FAVORITE_KEYS)
+}
+
+// 检查对象是否包含所有关系属性
+export const hasRelationshipProperties = (obj: any): boolean => {
+  return hasAllProperties(obj, RELATIONSHIP_KEYS)
 }

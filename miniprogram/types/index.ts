@@ -8,7 +8,7 @@ export interface BookplateApp extends IAppOption {
   globalData: {
     userInfo?: WechatMiniprogram.UserInfo,
 
-    _id: DocumentId,
+    _id: DocumentID,
     _openid: string,
     user: User,
   }
@@ -17,7 +17,7 @@ export interface BookplateApp extends IAppOption {
 // ============== 数据库相关 ==============
 
 // 数据库自动生成的 _id 和 _openid 类型
-export type DocumentId = string | number
+export type DocumentID = string | number
 
 // 在云开发中，数据库的存储对 Date 类型有特殊的优化，腾讯官方建议使用 Date 类型存储时间信息
 // 但在本地开发过程中，Date 的传递经常会出现空对象的情况
@@ -34,7 +34,7 @@ export type DocumentId = string | number
 export type Time = DB.ServerDate | Date | number
 
 export interface DBIdentifier {
-  readonly _id: DocumentId  // _id 是数据库中的唯一标识，用于区分不同的数据
+  readonly _id: DocumentID  // _id 是数据库中的唯一标识，用于区分不同的数据
   readonly _openid: string  // _openid 是用户的唯一标识，用于区分不同的用户
 }
 
@@ -55,7 +55,7 @@ export interface User {
 export interface UserDB extends User, DBIdentifier { }
 // 可公开的用户信息的类型定义
 export type UserPublicInfo = Omit<UserDB, keyof {
-  _id: DocumentId,
+  _id: DocumentID,
   create_time: Time,
   major: string,
 }>

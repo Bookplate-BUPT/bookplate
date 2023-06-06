@@ -1,8 +1,8 @@
 import { convertDateToTimestamp, hasFavoriteProperties } from "../utils/utils"
-import { DocumentId, Favorite, FaVoriteAggregateResult, FavoriteDB } from "../types/index"
+import { DocumentID, Favorite, FaVoriteAggregateResult, FavoriteDB } from "../types/index"
 
 // 通过 docId 获取收藏信息
-export const getFavoriteById = (id: DocumentId): Promise<FavoriteDB> => {
+export const getFavoriteByID = (id: DocumentID): Promise<FavoriteDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('favorites')
       .doc(id)
@@ -15,7 +15,7 @@ export const getFavoriteById = (id: DocumentId): Promise<FavoriteDB> => {
 }
 
 // 通过书籍 ID 获取收藏信息
-export const getFavoriteByBookId = (openid: string, id: DocumentId): Promise<FavoriteDB> => {
+export const getFavoriteByBookID = (openid: string, id: DocumentID): Promise<FavoriteDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('favorites')
       .where({
@@ -48,7 +48,7 @@ export const addFavorite = (favorite: Favorite): Promise<DB.IAddResult> => {
 }
 
 // 取消收藏
-export const removeFavorite = (id: DocumentId): Promise<DB.IRemoveResult> => {
+export const removeFavorite = (id: DocumentID): Promise<DB.IRemoveResult> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('favorites')
       .doc(id)

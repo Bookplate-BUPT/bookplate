@@ -1,9 +1,9 @@
 import { convertDateToTimestamp, convertTimestampToDate, hasBookProperties } from "../utils/utils"
-import { Book, BookDB, DocumentId } from "../types/index"
+import { Book, BookDB, DocumentID } from "../types/index"
 import { BOOK_LIMIT_NUM } from "../consts/index"
 
 // 通过 _id 获取书籍
-export const getBookById = (id: DocumentId): Promise<BookDB> => {
+export const getBookByID = (id: DocumentID): Promise<BookDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
       .doc(id)
@@ -32,7 +32,7 @@ export const addBook = (book: Book): Promise<DB.IAddResult> => {
 }
 
 // 更新书籍
-export const updateBookById = (book: Book, id: DocumentId): Promise<DB.IUpdateResult> => {
+export const updateBookByID = (book: Book, id: DocumentID): Promise<DB.IUpdateResult> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('books')
       .doc(id)

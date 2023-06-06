@@ -1,27 +1,27 @@
 import { convertDateToTimestamp, convertTimestampToDate, hasUserProperties } from "../utils/utils"
-import { BookplateApp, DocumentId, User, UserDB, UserPublicInfo } from "../types/index"
+import { BookplateApp, DocumentID, User, UserDB, UserPublicInfo } from "../types/index"
 const app = getApp<BookplateApp>()
 
 // 在实际开发中，直接使用 app.globalData.xxx 也是可以的
 // 但是为了避免反复获取应用实例，以及让代码更加简洁，我们可以封装一下
 
 // 获取全局变量中的用户 _id
-export const getLocalUserId = (): DocumentId => {
+export const getLocalUserID = (): DocumentID => {
   return app.globalData._id
 }
 
 // 设置全局变量中的用户 _id
-export const setLocalUserId = (id: DocumentId): void => {
+export const setLocalUserID = (id: DocumentID): void => {
   app.globalData._id = id
 }
 
 // 获取全局变量中的用户 _openid
-export const getLocalUserOpenId = (): string => {
+export const getLocalUserOpenid = (): string => {
   return app.globalData._openid
 }
 
 // 设置全局变量中的用户 _openid
-export const setLocalUserOpenId = (openid: string): void => {
+export const setLocalUserOpenid = (openid: string): void => {
   app.globalData._openid = openid
 }
 
@@ -47,19 +47,19 @@ export const isLogin = (): boolean => {
 
 // 登出（清除本地用户信息）
 export const logout = (): void => {
-  setLocalUserId('' as DocumentId)
-  setLocalUserOpenId('' as string)
+  setLocalUserID('' as DocumentID)
+  setLocalUserOpenid('' as string)
   setLocalUser({} as User)
   wx.removeStorageSync('user')
 }
 
 // 通过云函数获得用户的 openid
-export const getOpenId = (): Promise<string> => {
+export const getOpenid = (): Promise<string> => {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name: 'bookplateFunctions',
       data: {
-        type: 'getOpenId'
+        type: 'getOpenid'
       }
     }).then(res => {
       resolve(res.result as string)
@@ -68,7 +68,7 @@ export const getOpenId = (): Promise<string> => {
 }
 
 // 通过 openid 获取自己的信息（由于权限问题，不能以此获取其他用户的信息）
-export const getUserByOpenId = (openid: string): Promise<UserDB> => {
+export const getUserByOpenid = (openid: string): Promise<UserDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
       .where({
@@ -83,7 +83,7 @@ export const getUserByOpenId = (openid: string): Promise<UserDB> => {
 }
 
 // 通过 _id 获取自己的信息（由于权限问题，不能以此获取其他用户的信息）
-export const getUserById = (id: DocumentId): Promise<UserDB> => {
+export const getUserByID = (id: DocumentID): Promise<UserDB> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
       .doc(id)
@@ -114,7 +114,7 @@ export const addUser = (user: User): Promise<DB.IAddResult> => {
 }
 
 // 更新用户信息
-export const updateUserById = (user: User, docId: DocumentId): Promise<DB.IUpdateResult> => {
+export const updateUserByID = (user: User, docId: DocumentID): Promise<DB.IUpdateResult> => {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection('users')
       .doc(docId)

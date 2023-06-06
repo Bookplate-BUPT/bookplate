@@ -1,13 +1,13 @@
 // pages/sellBook/index.ts
 import { removeDBIdentifier } from "../../utils/utils";
-import { Book, BookDB, DocumentId } from "../../types/index";
-import { addBook, getBookById, searchBookByISBN, updateBookById } from "../../services/books";
+import { Book, BookDB, DocumentID } from "../../types/index";
+import { addBook, getBookByID, searchBookByISBN, updateBookByID } from "../../services/books";
 import { deleteImage, uploadImage } from "../../services/index";
-import { getLocalUserOpenId } from "../../services/users";
+import { getLocalUserOpenid } from "../../services/users";
 
 interface Options {
   scan?: string         // 是否需要自动扫码
-  bookId?: DocumentId   // 上传新书籍，还是修改已有书籍
+  bookID?: DocumentID   // 上传新书籍，还是修改已有书籍
 }
 
 // 需要检查数据是否完整的 key ，images 另外手动检查
@@ -23,8 +23,8 @@ Page({
     if (options.scan === 'true') this.onScanISBN()
 
     // 已有传进来的数据
-    if (options.bookId) {
-      let bookDB = await getBookById(options.bookId)
+    if (options.bookID) {
+      let bookDB = await getBookByID(options.bookID)
       this.setData({
         book: removeDBIdentifier(bookDB),
         bookDB: bookDB,
@@ -107,7 +107,7 @@ Page({
     let promiseList = this.data.book.images.map((i: string, idx: number) => {
       // 只有本地上传的图片，才上传到云存储
       if (i.slice(0, 11) === 'http://tmp/' || i.slice(0, 12) === 'wxfile://tmp') {
-        let promise = uploadImage(`bookImages/${getLocalUserOpenId()}-${Date.now()}-${idx}.jpg`, i)
+        let promise = uploadImage(`bookImages/${getLocalUserOpenid()}-${Date.now()}-${idx}.jpg`, i)
         promise.then(res => {
           this.setData({
             [`book.images[${idx}]`]: res
@@ -125,7 +125,7 @@ Page({
 
     // 更新已有书籍
     if (this.data.bookDB._id) {
-      updateBookById(this.data.book, this.data.bookDB._id)
+      updateBookByID(this.data.book, this.data.bookDB._id)
     } else { // 添加新书籍
       this.setData({
         ['book.contact']: this.data.book.contact === undefined ? '' : this.data.book.contact,

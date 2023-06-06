@@ -1,8 +1,8 @@
 // pages/main/index.ts
-import { getLocalUserOpenId } from "../../services/users"
+import { getLocalUserOpenid } from "../../services/users"
 import { getSortedBookList } from "../../services/books"
 import { BookDB, FavoriteDB } from "../../types/index"
-import { addFavorite, getFavoriteByBookId } from "../../services/favorite"
+import { addFavorite, getFavoriteByBookID } from "../../services/favorite"
 import { BOOK_LIMIT_NUM, BOOK_TYPE_OPTION, SORT_TYPE_OPTION } from "../../consts/index";
 
 Page({
@@ -44,7 +44,7 @@ Page({
   // 点击收藏按钮触发
   async onFavorite(e: WechatMiniprogram.TouchEvent) {
     // 无法收藏自己的书籍
-    if (e.currentTarget.dataset.book._openid === getLocalUserOpenId()) {
+    if (e.currentTarget.dataset.book._openid === getLocalUserOpenid()) {
       wx.showToast({
         title: '无法收藏自己的书籍',
         icon: 'none'
@@ -52,7 +52,7 @@ Page({
       return
     }
 
-    let favoriteDB = await getFavoriteByBookId(getLocalUserOpenId(), e.currentTarget.dataset.book._id)
+    let favoriteDB = await getFavoriteByBookID(getLocalUserOpenid(), e.currentTarget.dataset.book._id)
 
     // 无法重复收藏
     if (favoriteDB) {
@@ -100,7 +100,7 @@ Page({
   // 书籍筛选条件改变时调用
   onChangeType(e: WechatMiniprogram.TouchEvent) {
     // 根据学院和专业生成数据库筛选条件
-    let condition = e.detail[0] === '全部书籍' ? {} : {
+    let condition = e.detail[0] === '全部书籍' ? { state: 0 } : {
       school: e.detail[0],
       major: e.detail[1] === '所有专业' ? undefined : e.detail[1],
       state: 0,   // 未售出的书籍状态

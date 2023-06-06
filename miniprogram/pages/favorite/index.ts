@@ -2,7 +2,7 @@
 import { FaVoriteAggregateResult } from "../../types/index";
 import { BOOK_LIMIT_NUM } from "../../consts/index";
 import { getFavoriteList } from "../../services/favorite";
-import { getLocalUserOpenId } from "../../services/users";
+import { getLocalUserOpenid } from "../../services/users";
 import { isEqual } from "../../utils/utils";
 
 Page({
@@ -16,13 +16,13 @@ Page({
 
   async onLoad() {
     this.setData({
-      bookList: await getFavoriteList(getLocalUserOpenId(), BOOK_LIMIT_NUM, 0)
+      bookList: await getFavoriteList(getLocalUserOpenid(), BOOK_LIMIT_NUM, 0)
     })
   },
 
   async onShow() {
     // 每当页面显示时，为保证收藏信息正确，需要重发请求，并比对两者数据
-    let res = await getFavoriteList(getLocalUserOpenId(), BOOK_LIMIT_NUM, 0)
+    let res = await getFavoriteList(getLocalUserOpenid(), BOOK_LIMIT_NUM, 0)
 
     // 如果数据发生了改变，则需要重新获取整个列表
     if (!isEqual(this.data.bookList.slice(0, res.length + 1), res)) {
@@ -33,7 +33,7 @@ Page({
       let favoriteListLength = this.data.bookList.length < BOOK_LIMIT_NUM ? BOOK_LIMIT_NUM : this.data.bookList.length
 
       this.setData({
-        bookList: await getFavoriteList(getLocalUserOpenId(), favoriteListLength, 0)
+        bookList: await getFavoriteList(getLocalUserOpenid(), favoriteListLength, 0)
       })
 
       wx.hideLoading()
@@ -53,7 +53,7 @@ Page({
       title: '正在加载'
     })
 
-    getFavoriteList(getLocalUserOpenId(), BOOK_LIMIT_NUM, this.data.bookList.length).then(res => {
+    getFavoriteList(getLocalUserOpenid(), BOOK_LIMIT_NUM, this.data.bookList.length).then(res => {
       wx.hideLoading()
 
       this.setData({
