@@ -72,3 +72,15 @@ yarn install
    >
    > 同样，如果你不喜欢这个页面的话，也可以查看别的页面
 
+## 一个千古难题
+
+很多项目都分不清到底是 id 还是 Id 还是 ID ，是 openid 还是 openId 还是 openID 。
+
+故在此给出一个标准：
+
+- 不能出现只叫 id 的变量
+- 在单词内部的 id 则写成 ID ，比如 userID 、bookID
+- 特别的， _id 就写成 _id（这是数据库表主键）
+- openid 内的 id 不进行大写处理 ，需要首字母大写时写成 Openid ，
+- 小程序内部对 doc 的 id 会声明成 docId ，这个特殊处理即可
+
