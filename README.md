@@ -4,7 +4,7 @@
 
 作为藏书票 Bookplate 的开发者，你应该：
 
-1. 掌握 Git 的基本操作
+1. 掌握 Git 的基本操作，了解 commit 信息的 Angular 规范
 2. 对 JavaScript 的基本数据类型有一定了解，以此上手 TypeScript
 3. 有一定 JavaScript 基础，理解 JavaScript 中的**引用**
 4. 拥有对同步、异步、Promise、async、await 的基本认识
@@ -64,7 +64,7 @@ yarn install
 
    > 这一步你只需要理解里面有哪些方法，起到了什么作用就可以
    >
-   > 如果你对 JavaScript/TypeScript 有足够基础的话，也不是不可以试着去理解里面每一行代码做了什么
+   > 如果你对 JavaScript/TypeScript 有足够基础的话，也可以试着去理解里面每一行代码做了什么
 
 5. 阅读 `pages/personalInfo`
 
