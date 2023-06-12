@@ -15,7 +15,26 @@ var getFloat = function (n) {
   return ans
 }
 
+// 自定义时间戳转成时间，形式如下
+// y年x月x日 hh:mm
+var getFormatTime = function (timestamp) {
+  var date = getDate(timestamp)
+
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var days = date.getDate()
+  var hours = date.getHours()
+  var minutes = date.getMinutes()
+
+  return (year === getDate().getFullYear() ? '' : year + '年')
+    + month + '月'
+    + days + '日 '
+    + hours + ':'
+    + (minutes < 10 ? '0' + minutes : minutes)
+}
+
 module.exports = {
   getInt: getInt,
   getFloat: getFloat,
+  getFormatTime: getFormatTime,
 }
