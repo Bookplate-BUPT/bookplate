@@ -52,7 +52,7 @@
 <view style="height: 128px;" />
 
 <van-goods-action>
-  <van-goods-action-icon icon="{{ favoriteId ? 'star' : 'star-o' }}" icon-class="{{ favoriteId ? 'favorite-star' : ''}}" text="{{ favoriteId ? '已收藏' : '收藏' }}" bind:click="onFavorite" />
+  <van-goods-action-icon icon="{{ favoriteID ? 'star' : 'star-o' }}" icon-class="{{ favoriteID ? 'favorite-star' : ''}}" text="{{ favoriteID ? '已收藏' : '收藏' }}" bind:click="onFavorite" />
   <van-goods-action-button text="立即购买" plain color="var(--green)" bind:click="toTrade" />
-  <van-goods-action-button text="联系卖家" color="var(--linear-green)" bind:click="toContact" />
+  <van-goods-action-button text="联系卖家" color="var(--linear-green)" bind:click="toChatroom" />
 </van-goods-action>

@@ -1,7 +1,7 @@
 // pages/bookDetail/index.ts
-import { addFavorite, getFavoriteByBookId, removeFavorite } from "../../services/favorite";
-import { getLocalUserOpenId, getUserPublicInfo } from "../../services/users";
-import { BookDB, DocumentId, FavoriteDB, User } from "../../types/index";
+import { addFavorite, getFavoriteByBookID, removeFavorite } from "../../services/favorite";
+import { getLocalUserOpenid, getUserPublicInfo, isLogin } from "../../services/users";
+import { BookDB, DocumentID, FavoriteDB, UserPublicInfo } from "../../types/index";
 
 interface Options {
   bookDB?: string   // encode 后的 JSON 序列化书籍字符串
@@ -10,9 +10,9 @@ interface Options {
 Page({
   data: {
     bookDB: {} as BookDB, // 书籍信息
-    seller: {} as User,   // 卖家信息
+    seller: {} as UserPublicInfo,   // 卖家信息
 
-    favoriteId: '' as DocumentId  // 关于此书籍的收藏信息
+    favoriteID: '' as DocumentID  // 关于此书籍的收藏信息
   },
 
   async onLoad(options: Options) {
@@ -21,11 +21,11 @@ Page({
         bookDB: JSON.parse(decodeURIComponent(options.bookDB))
       })
 
-      let favoriteDB = await getFavoriteByBookId(getLocalUserOpenId(), this.data.bookDB._id)
+      let favoriteDB = await getFavoriteByBookID(getLocalUserOpenid(), this.data.bookDB._id)
 
       this.setData({
         seller: await getUserPublicInfo(this.data.bookDB._openid),
-        favoriteId: favoriteDB ? favoriteDB._id : undefined,
+        favoriteID: favoriteDB ? favoriteDB._id : undefined,
       })
     }
   },
@@ -40,8 +40,16 @@ Page({
 
   // 点击收藏按钮触发
   onFavorite() {
+    if (!isLogin()) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'error',
+      })
+      return
+    }
+
     // 无法收藏自己的书籍
-    if (this.data.bookDB._openid === getLocalUserOpenId()) {
+    if (this.data.bookDB._openid === getLocalUserOpenid()) {
       wx.showToast({
         title: '无法收藏自己的书籍',
         icon: 'none'
@@ -50,14 +58,14 @@ Page({
     }
 
     // 取消收藏
-    if (this.data.favoriteId) {
-      removeFavorite(this.data.favoriteId).then(() => {
+    if (this.data.favoriteID) {
+      removeFavorite(this.data.favoriteID).then(() => {
         wx.showToast({
           title: '取消收藏',
           icon: 'success'
         })
         this.setData({
-          favoriteId: ''
+          favoriteID: ''
         })
       })
       return
@@ -73,8 +81,23 @@ Page({
         icon: 'success',
       })
       this.setData({
-        favoriteId: res._id,
+        favoriteID: res._id,
       })
+    })
+  },
+
+  // 联系卖家
+  toChatroom() {
+    if (!isLogin()) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'error',
+      })
+      return
+    }
+
+    wx.navigateTo({
+      url: `../chatroom/index?user=${encodeURIComponent(JSON.stringify(this.data.seller))}`,
     })
   },
 })
