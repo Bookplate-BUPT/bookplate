@@ -1,11 +1,11 @@
 <!--pages/personalInfo/index.wxml-->
 
-<wxs src="../../consts/index.wxs" module="utils" />
+<wxs src="../../consts/index.wxs" module="consts" />
 
 <van-cell-group inset custom-class="card">
   <button id="avatar" data-key="avatar" open-type="chooseAvatar" bind:chooseavatar="onChange">
     <van-field label="头像" required readonly>
-      <van-image slot="button" round width="64" height="64" src="{{ user.avatar ? user.avatar : utils.DEFAULT_AVATAR_URL }}" />
+      <van-image slot="button" round width="64" height="64" src="{{ user.avatar ? user.avatar : consts.DEFAULT_AVATAR_URL }}" />
     </van-field>
   </button>
 
