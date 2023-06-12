@@ -1,2 +1,26 @@
 <!--pages/message/index.wxml-->
-<text>pages/message/index.wxml</text>
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<van-notice-bar left-icon="info-o" text="建议线下当面进行交易，祝您购书愉快~" />
+
+<view wx:if="{{ !relationshipList.length }}" id="message-empty">
+  <van-empty description="暂时没有新消息" />
+</view>
+<view wx:elif="{{ relationshipList.length }}">
+  <view wx:for="{{ relationshipList }}" wx:key="id" class="user-card" bindtap="toChatroom" data-relationship="{{ item }}">
+    <van-image round width="40px" height="40px" src="{{ item.user1_openid === userOpenid ? item.user2_avatar : item.user1_avatar }}" />
+
+    <view wx:if="{{ !item.is_readed && item.last_sender !== userOpenid }}" class="dot">
+      <text style="padding: 0; margin: 0;">{{ item.last_send_number }}</text>
+    </view>
+
+    <view style="margin-left: 16px; width: 82%;">
+      <view style="margin-top: -8px;">
+        <text>{{ item.user1_openid === userOpenid ? item.user2_nickname : item.user1_nickname }}</text>
+        <text class="date">{{ utils.getFormatTime(item.last_create_time) }}</text>
+      </view>
+
+      <view class="content">{{ item.last_content }}</view>
+    </view>
+  </view>
+</view>

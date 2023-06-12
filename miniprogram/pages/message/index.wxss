@@ -1,1 +1,55 @@
 /* pages/message/index.wxss */
+#message-empty {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-top: 1px solid #eeeeee;
+  padding-left: 16px;
+  padding-top: 16px;
+  padding-bottom: 8px;
+
+  position: relative;
+}
+
+.date {
+  justify-content: flex-end;
+  display: flex;
+  font-size: small;
+  color: #999999;
+  margin-top: -20px;
+  margin-right: 8px;
+}
+
+.content {
+  margin-top: 8px;
+  font-size: small;
+  color: #999999;
+  padding-right: 16px;
+
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot {
+  position: absolute;
+  top: 14px;
+  left: 46px;
+  font-size: 12px;
+  color: #FFFFFF;
+  background-color: #FA5151;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
