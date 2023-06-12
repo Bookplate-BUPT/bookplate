@@ -52,6 +52,12 @@ export const BOOK_KEYS = ['author', 'create_time', 'contact', 'description', 'fa
 // 收藏字段
 export const FAVORITE_KEYS = ['book_id', 'create_time']
 
+// 关系字段
+export const RELATIONSHIP_KEYS = ['create_time', 'is_readed', 'last_content', 'last_content_type', 'last_create_time', 'last_send_number', 'last_sender', 'user1_openid', 'user1_avatar', 'user1_nickname', 'user2_openid', 'user2_avatar', 'user2_nickname']
+
+// 消息字段
+export const MESSAGE_KEYS = ['content', 'create_time', 'receiver', 'sender', 'type']
+
 // 书籍类型选项
 export const BOOK_TYPE_OPTION = [
   {
