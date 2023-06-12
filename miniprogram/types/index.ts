@@ -34,8 +34,8 @@ export type DocumentID = string | number
 export type Time = DB.ServerDate | Date | number
 
 export interface DBIdentifier {
-  readonly _id: DocumentID  // _id 是数据库中的唯一标识，用于区分不同的数据
-  readonly _openid: string  // _openid 是用户的唯一标识，用于区分不同的用户
+  _id: DocumentID  // _id 是数据库中的唯一标识，用于区分不同的数据
+  _openid: string  // _openid 是用户的唯一标识，用于区分不同的用户
 }
 
 export interface User {
